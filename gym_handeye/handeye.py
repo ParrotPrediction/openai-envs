@@ -1,7 +1,10 @@
 import gym
 
+from gym.spaces import Discrete
+import random
 
-class HandEye(gym.Env): #why GoalEnv doesn't work???
+
+class HandEye(gym.Env):
     """The main OpenAI Gym class. It encapsulates an environment with
         arbitrary behind-the-scenes dynamics. An environment can be
         partially or fully observed.
@@ -30,6 +33,23 @@ class HandEye(gym.Env): #why GoalEnv doesn't work???
     action_space = None
     observation_space = None
 
+    def __init__(self, grid_size, note_in_hand):
+        self.grid_size = grid_size
+        self.note_in_hand = note_in_hand
+
+        self.grip_pos_x = None
+        self.grip_pos_y = None
+        self.block_in_hand = False
+        self.block_pos_x = None
+        self.block_pos_y = None
+
+        self.env_size = self.grid_size * self.grid_size + 1
+
+        self.observation_space = Discrete(self.env_size) #TODO: rozmiar planszy czy możliwe wartości?
+        self.action_space = Discrete(6)
+
+        self.reset()
+
     def step(self, action):
         """Run one timestep of the environment's dynamics. When end of
         episode is reached, you are responsible for calling `reset()`
@@ -50,6 +70,29 @@ class HandEye(gym.Env): #why GoalEnv doesn't work???
         Returns: observation (object): the initial observation of the
             space.
         """
+        # random block position
+        self.block_pos_x = random.randint(0, self.grid_size)
+        self.block_pos_y = random.randint(0, self.grid_size)
+
+        # TODO: random gripper position
+        if (random.choice([True, False])):
+            # block in hand
+            self.block_in_hand = True
+            self.grip_pos_x = self.block_pos_x
+            self.grip_pos_y = self.block_pos_y
+            if self.note_in_hand:
+                # TODO: env[envSize - 1] = '2'; - observation
+                pass
+        else:
+            # block not in hand
+            self.block_in_hand = False
+            self.grip_pos_x = random.randint(0, self.grid_size)
+            self.grip_pos_y = random.randint(0, self.grid_size)
+            # TODO: env[gPosY * HE_GRID_SIZE + gPosX] = 'g';
+            #   if (blockPositions[0] == gPosX && blockPositions[1] == gPosY) { //is above block
+            #     env[envSize - 1] = '1';
+            #   }
+        #TODO: return observation
         raise NotImplementedError
 
     def render(self, mode='human'):
@@ -105,7 +148,7 @@ class HandEye(gym.Env): #why GoalEnv doesn't work???
               'seed'. Often, the main seed equals the provided 'seed', but
               this won't be true if seed=None, for example.
         """
-        logger.warn("Could not seed environment %s", self)
+        gym.logger.warn("Could not seed environment %s", self)
         return
 
     @property
