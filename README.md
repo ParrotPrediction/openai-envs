@@ -1,5 +1,10 @@
 # Parrot Prediction OpenAI environments
 
+    conda create --name openai-envs python=3.7
+    source activate openai-envs
+
+    pip install -r requirements.txt
+
 ## Maze
 
 Initializing

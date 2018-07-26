@@ -24,7 +24,7 @@ class AbstractMaze(gym.Env):
         self.action_space = spaces.Discrete(8)
         self.observation_space = spaces.Discrete(8)
 
-    def _step(self, action):
+    def step(self, action):
         previous_observation = self._observe()
         self._take_action(action, previous_observation)
 
@@ -34,15 +34,12 @@ class AbstractMaze(gym.Env):
 
         return observation, reward, episode_over, {}
 
-    def _reset(self):
+    def reset(self):
         logging.debug("Resetting the environment")
         self._insert_animat()
         return self._observe()
 
-    def _render(self, mode='human', close=False):
-        if close:
-            return
-
+    def render(self, mode='human'):
         logging.debug("Rendering the environment")
         if mode == 'human':
             outfile = sys.stdout
