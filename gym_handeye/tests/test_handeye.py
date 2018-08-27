@@ -30,7 +30,7 @@ class TestHandEye(unittest.TestCase):
 
         for i, obs in enumerate(state):
             if i < 9:
-                self.assertIn(obs,['w', 'b', 'g', '0', '1', '2'])
+                self.assertIn(obs,['w', 'b', 'g'])
             else:
                 self.assertIn(obs, ['0', '1', '2'])
 
@@ -45,7 +45,7 @@ class TestHandEye(unittest.TestCase):
         self.assertEqual(list, type(state))
         for i, obs in enumerate(state):
             if i < 9:
-                self.assertIn(obs,['w', 'b', 'g', '0', '1', '2'])
+                self.assertIn(obs,['w', 'b', 'g'])
             else:
                 self.assertIn(obs, ['0', '1', '2'])
 
@@ -62,7 +62,7 @@ class TestHandEye(unittest.TestCase):
         self.assertFalse(done)
         for i, obs in enumerate(state):
             if i < 9:
-                self.assertIn(obs,['w', 'b', 'g', '0', '1', '2'])
+                self.assertIn(obs,['w', 'b', 'g'])
             else:
                 self.assertIn(obs, ['0', '1', '2'])
 

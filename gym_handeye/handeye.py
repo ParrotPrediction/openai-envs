@@ -138,7 +138,6 @@ class HandEye(gym.Env):
             if self.block_pos_x == self.grip_pos_x and self.block_pos_y == self.grip_pos_y:  # is above block
                 self.env[self.env_size - 1] = '1'
 
-        # TODO: return observation (?)
         return self.env
 
     def render(self, mode='human', close = False):
