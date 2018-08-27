@@ -9,7 +9,7 @@ import gym_handeye
 logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
-    hand_eye = gym.make('HandEye-v0')
+    hand_eye = gym.make('HandEye3-v0')
 
     possible_actions = list(range(6))
     # transitions = maze.env.get_all_possible_transitions()
