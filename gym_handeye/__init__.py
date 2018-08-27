@@ -1,9 +1,11 @@
+from gym.envs.registration import register
 
-ACTION_LOOKUP = {
-    0: 'N',
-    1: 'E',
-    2: 'S',
-    3: 'W',
-    4: 'G',
-    5: 'R'
-}
+from .handeye import HandEye
+
+
+register(
+    id='HandEye-v0',
+    entry_point='gym_handeye:HandEye',
+    max_episode_steps=50,
+    kwargs={'grid_size' : 3, 'note_in_hand' : True, 'test_only_changes' : False}
+)

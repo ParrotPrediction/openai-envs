@@ -8,7 +8,14 @@ import numpy as np
 from gym.spaces import Discrete
 import random
 
-from gym_handeye import ACTION_LOOKUP
+ACTION_LOOKUP = {
+    0: 'N',
+    1: 'E',
+    2: 'S',
+    3: 'W',
+    4: 'G',
+    5: 'R'
+}
 
 
 class HandEye(gym.Env):
@@ -59,7 +66,7 @@ class HandEye(gym.Env):
 
         self.env_size = self.grid_size * self.grid_size + 1
 
-        self.observation_space = Discrete(self.env_size)  # camera monitors whole grid
+        self.observation_space = Discrete(self.env_size)  # camera monitors the whole grid
         self.action_space = Discrete(6)  # N - north, S - south, W - west, E - east, G - grip, R - release
 
         self.goal_generator_state = 0
@@ -99,7 +106,7 @@ class HandEye(gym.Env):
             space.
         """
 
-        for i, num in self.env:
+        for i, element in enumerate(self.env):
             self.env[i] = 'w'
         self.env[self.env_size - 1] = '0'
 
