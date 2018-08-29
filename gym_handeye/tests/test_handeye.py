@@ -7,6 +7,7 @@ import gym
 
 # noinspection PyUnresolvedReferences
 import gym_handeye
+from gym_handeye.handeye import MockHandEye
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
@@ -77,6 +78,27 @@ class TestHandEye(unittest.TestCase):
             action = self._random_action()
             p1, reward, done, _ = he.step(action)
             self.assertEqual(10, len(p1))
+
+    def test_mockhandeye(self):
+        start = ["g","w","w","w","w","w","w","w","b","0"]
+        mock = MockHandEye(3, True, False)
+        mock.parse_observation(start)
+        end = mock.observe()
+        self.assertEqual(start,end)
+
+    def test_mockhandeye_in_hand(self):
+        start = ["w", "w", "w", "w", "w", "w", "w", "w", "b", "2"]
+        mock = MockHandEye(3, True, False)
+        mock.parse_observation(start)
+        end = mock.observe()
+        self.assertEqual(start, end)
+
+    def test_mockhandeye_not_in_hand(self):
+        start = ["w", "w", "w", "w", "w", "w", "w", "w", "g", "1"]
+        mock = MockHandEye(3, True, False)
+        mock.parse_observation(start)
+        end = mock.observe()
+        self.assertEqual(start, end)
 
     @staticmethod
     def _random_action():
