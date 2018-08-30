@@ -77,7 +77,7 @@ class HandEye(gym.Env):
                 not self.test_only_changes and previous_observation != observation):
             episode_over = True
 
-        return observation, reward, episode_over, {}
+        return tuple(observation), reward, episode_over, {}
 
     def reset(self):
         """Resets the state of the environment and returns an initial observation.
@@ -96,7 +96,7 @@ class HandEye(gym.Env):
         self.observation[self.block_pos_y * self.grid_size + self.block_pos_x] = 'b'
 
         # random gripper position
-        if (random.choice([True, False])):
+        if random.choice([True, False]):
             # block in hand
             self.block_in_hand = True
 
@@ -117,7 +117,7 @@ class HandEye(gym.Env):
             if self.block_pos_x == self.grip_pos_x and self.block_pos_y == self.grip_pos_y:  # is above block
                 self.observation[self.env_size - 1] = '1'
 
-        return self.observation
+        return tuple(self.observation)
 
     def render(self, mode='human', close=False):
         """Renders the environment.
