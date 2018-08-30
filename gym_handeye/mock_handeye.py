@@ -1,14 +1,16 @@
-import sys
-sys.path.append('/home/e-dzia/openai-envs')
 from gym_handeye import HandEye
 
 
 class MockHandEye(HandEye):
+    """
+    Class used to mock HandEye class for counting performance function
+    """
+
     def observe(self):
         observation = ['w' for x in range(self.env_size - 1)]
         observation.append('0')
 
-        if self.grip_pos_x != self.block_pos_x and self.grip_pos_y != self.block_pos_y:
+        if not(self.grip_pos_x == self.block_pos_x and self.grip_pos_y == self.block_pos_y):
             observation[self.grip_pos_y * self.grid_size + self.grip_pos_x] = 'g'
             observation[self.block_pos_y * self.grid_size + self.block_pos_x] = 'b'
         else:
@@ -42,3 +44,6 @@ class MockHandEye(HandEye):
         elif self.block_pos_x == -1:
             self.block_pos_x = self.grip_pos_x
             self.block_pos_y = self.grip_pos_y
+
+    def take_action(self, action):
+        return self._take_action(action, None)

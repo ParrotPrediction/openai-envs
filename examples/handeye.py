@@ -12,7 +12,6 @@ if __name__ == '__main__':
     hand_eye = gym.make('HandEye3-v0')
 
     possible_actions = list(range(6))
-    # transitions = maze.env.get_all_possible_transitions()
 
     for i_episode in range(1):
         observation = hand_eye.reset()
