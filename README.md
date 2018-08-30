@@ -1,5 +1,10 @@
 # Parrot Prediction OpenAI environments
 
+    conda create --name openai-envs python=3.7
+    source activate openai-envs
+
+    pip install -r requirements.txt
+
 ## Maze
 
 Initializing
@@ -12,3 +17,7 @@ Getting all possible transitions
 
 ## Boolean Multiplexer
 Read blog [post](https://medium.com/parrot-prediction/boolean-multiplexer-in-practice-94e3236821b5) describing the usage.
+
+## Running tests
+
+    pytest

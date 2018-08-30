@@ -19,12 +19,12 @@ class Multiplexer(gym.Env):
     self._state = None
     self._validation_bit = 0
 
-  def _reset(self):
+  def reset(self):
       self._state = self._generate_state()
       self._validation_bit = 0
       return self._observation
 
-  def _step(self, action):
+  def step(self, action):
       reward = 0
 
       if action == self._correct_answer:
@@ -33,10 +33,7 @@ class Multiplexer(gym.Env):
 
       return self._observation, reward, None, None
 
-  def _render(self, mode='human', close=False):
-      if close:
-          return
-
+  def render(self, mode='human'):
       if mode == 'human':
           return self._observation
 

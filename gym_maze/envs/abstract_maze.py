@@ -13,6 +13,25 @@ from gym_maze.utils import get_all_possible_transitions
 ANIMAT_MARKER = 5
 
 
+class MazeObservationSpace(gym.Space):
+    def __init__(self, n):
+        # n is the number of visible neighbour fields, typically 8
+        self.n = n
+        gym.Space.__init__(self, (self.n,), str)
+
+    def sample(self):
+        return tuple(random.choice(['0', '1', '9']) for _ in range(self.n))
+
+    def contains(self, x):
+        return all(elem in ('0', '1', '9', str(ANIMAT_MARKER)) for elem in x)
+
+    def to_jsonable(self, sample_n):
+        return list(sample_n)
+
+    def from_jsonable(self, sample_n):
+        return tuple(sample_n)
+
+
 class AbstractMaze(gym.Env):
     metadata = {'render.modes': ['human']}
 
@@ -22,9 +41,9 @@ class AbstractMaze(gym.Env):
         self.pos_y = None
 
         self.action_space = spaces.Discrete(8)
-        self.observation_space = spaces.Discrete(8)
+        self.observation_space = MazeObservationSpace(8)
 
-    def _step(self, action):
+    def step(self, action):
         previous_observation = self._observe()
         self._take_action(action, previous_observation)
 
@@ -34,15 +53,12 @@ class AbstractMaze(gym.Env):
 
         return observation, reward, episode_over, {}
 
-    def _reset(self):
+    def reset(self):
         logging.debug("Resetting the environment")
         self._insert_animat()
         return self._observe()
 
-    def _render(self, mode='human', close=False):
-        if close:
-            return
-
+    def render(self, mode='human'):
         logging.debug("Rendering the environment")
         if mode == 'human':
             outfile = sys.stdout
