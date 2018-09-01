@@ -10,7 +10,7 @@ import gym_handeye
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
-
+# TODO: tests with GIVEN, WHEN, THEN
 class TestHandEye(unittest.TestCase):
     def test_initialize(self):
         he = gym.make('HandEye3-v0')
