@@ -3,7 +3,7 @@ import logging
 
 from gym.spaces import Discrete
 import gym_handeye.utils.utils as utils
-from gym_handeye.HandEyeSimulator import HandEyeSimulator
+from gym_handeye.handeye_simulator import HandEyeSimulator
 
 ACTION_LOOKUP = {
     0: 'N',
