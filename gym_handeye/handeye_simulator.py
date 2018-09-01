@@ -138,7 +138,7 @@ class HandEyeSimulator():
 
         return
 
-    def random_positions(self):
+    def set_random_positions(self):
         """
         Non deterministic function, sets block on random position, then sets block in hand or not
         (if not in hand, then sets griper on random position).
@@ -147,8 +147,8 @@ class HandEyeSimulator():
         self.observation = self._get_empty_observation()
 
         # random block position
-        self.block_pos_x = random.randint(0, self.grid_size - 1)
-        self.block_pos_y = random.randint(0, self.grid_size - 1)
+        self.block_pos_x = self._get_random_position()
+        self.block_pos_y = self._get_random_position()
 
         self._set_observation_grid(self.block_pos_x, self.block_pos_y, BLOCK)
 
@@ -195,8 +195,8 @@ class HandEyeSimulator():
         """
         self.block_in_hand = False
 
-        self.grip_pos_x = random.randint(0, self.grid_size - 1)
-        self.grip_pos_y = random.randint(0, self.grid_size - 1)
+        self.grip_pos_x = self._get_random_position()
+        self.grip_pos_y = self._get_random_position()
 
         self._set_observation_grid(self.grip_pos_x, self.grip_pos_y, GRIPPER)
 
@@ -300,8 +300,8 @@ class HandEyeSimulator():
         :return:
         """
         while True:
-            x = random.randint(0, self.grid_size - 1)
-            y = random.randint(0, self.grid_size - 1)
+            x = self._get_random_position()
+            y = self._get_random_position()
             if x == self.grip_pos_x or y == self.grip_pos_y:
                 break
         self._set_goal_grid(self.grip_pos_x, self.grip_pos_y, BLOCK)
@@ -315,8 +315,8 @@ class HandEyeSimulator():
         :return:
         """
         while True:
-            x = random.randint(0, self.grid_size - 1)
-            y = random.randint(0, self.grid_size - 1)
+            x = self._get_random_position()
+            y = self._get_random_position()
             if x == self.grip_pos_x or y == self.grip_pos_y:
                 break
         self._set_goal_grid(self.grip_pos_x, self.grip_pos_y, SURFACE)
@@ -353,3 +353,33 @@ class HandEyeSimulator():
             self._set_goal_gripper_state(BLOCK_NOT_UNDER_GRIPPER)
         self._set_goal_grid(self.grip_pos_x, self.grip_pos_y, BLOCK)
         self.goal_generator_state = STATE_GRIP_BLOCK
+
+    def parse_observation(self, observation):
+        self.observation = self._get_empty_observation()
+        i = 0
+        for item in observation:
+            self.observation[i] = item
+            i += 1
+
+        self.block_pos_x = -1
+        self.block_pos_y = -1
+        self.grip_pos_x = -1
+        self.grip_pos_y = -1
+        self.block_in_hand = False
+        for i, field in enumerate(observation):
+            if field == 'b':
+                self.block_pos_x = i % self.grid_size
+                self.block_pos_y = int(i / self.grid_size)
+            if field == 'g':
+                self.grip_pos_x = i % self.grid_size
+                self.grip_pos_y = int(i / self.grid_size)
+        if self.grip_pos_x == -1:
+            self.block_in_hand = True
+            self.grip_pos_x = self.block_pos_x
+            self.grip_pos_y = self.block_pos_y
+        elif self.block_pos_x == -1:
+            self.block_pos_x = self.grip_pos_x
+            self.block_pos_y = self.grip_pos_y
+
+    def _get_random_position(self):
+        return random.randint(0, self.grid_size - 1)

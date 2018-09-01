@@ -1,9 +1,7 @@
+import sys
+
 import gym
 import logging
-
-from gym.spaces import Discrete
-import gym_handeye.utils.utils as utils
-from gym_handeye.handeye_simulator import HandEyeSimulator
 
 ACTION_LOOKUP = {
     0: 'N',
@@ -14,6 +12,10 @@ ACTION_LOOKUP = {
     5: 'R'
 }
 
+from gym.spaces import Discrete
+import gym_handeye.utils.utils as utils
+from gym_handeye.handeye_simulator import HandEyeSimulator
+
 
 class HandEye(gym.Env):
     metadata = {'render.modes': ['human']}
@@ -22,7 +24,8 @@ class HandEye(gym.Env):
         """
 
         :param grid_size: specifies the size of the monitored plain
-        :param note_in_hand: specifies if the tacticle sensor should switch to '2' if the block is held by the gripper (if False, then goes back to '0')
+        :param note_in_hand: specifies if the tacticle sensor should switch to '2' if the block is held by the gripper
+        (if False, then goes back to '0')
         :param test_only_changes: specifies if only condition-action combinations should be tested that invoke a change
         """
         logging.debug('Starting environment HandEye')
@@ -55,9 +58,7 @@ class HandEye(gym.Env):
         observation = self._observe()
         reward = 0
         episode_over = False
-        # TODO: osobne metody dla tych ifów z opisową nazwą
-        if (self.test_only_changes and previous_observation == observation) or (
-                (not self.test_only_changes) and previous_observation != observation):
+        if self._should_end_testing(previous_observation, observation):
             episode_over = True
 
         return tuple(observation), reward, episode_over, {}
@@ -71,7 +72,7 @@ class HandEye(gym.Env):
         """
         logging.debug('Resetting the environment')
 
-        self.handeye.random_positions()
+        self.handeye.set_random_positions()
 
         return tuple(self._observe())
 
@@ -88,8 +89,18 @@ class HandEye(gym.Env):
         logging.debug('Rendering the environment')
 
         if mode == 'human':
-            # TODO: render with colors etc.
-            return self._observe()
+            outfile = sys.stdout
+            outfile.write("\n")
+
+            j = 0
+            for item in self.handeye.observation:
+                if item not in ['w', 'g', 'b']:
+                    break
+                outfile.write(self._render_element(item))
+                j += 1
+                if j >= self.grid_size:
+                    outfile.write("\n")
+                    j = 0
         else:
             super(HandEye, self).render(mode=mode)
 
@@ -107,6 +118,16 @@ class HandEye(gym.Env):
     @staticmethod
     def get_all_possible_actions():
         return list(range(0, len(ACTION_LOOKUP)))
+
+    def _should_end_testing(self, previous, obs):
+        return (self.test_only_changes and self._no_change_detected(previous, obs)) or (
+                (not self.test_only_changes) and self._change_detected(previous, obs))
+
+    def _no_change_detected(self, previous, current):
+        return previous == current
+
+    def _change_detected(self, previous, current):
+        return not self._no_change_detected(previous, current)
 
     def get_all_possible_transitions(self):
         """
@@ -126,3 +147,12 @@ class HandEye(gym.Env):
 
     def get_goal_state(self):
         return self.handeye.get_goal_state()
+
+    @staticmethod
+    def _render_element(el):
+        if el == 'b':
+            return gym.utils.colorize('■', 'blue')
+        elif el == 'w':
+            return gym.utils.colorize('□', 'white')
+        elif el == 'g':
+            return gym.utils.colorize('#', 'green')

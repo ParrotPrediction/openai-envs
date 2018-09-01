@@ -1,8 +1,7 @@
 from gym.envs.registration import register
 
 from gym_handeye.handeye import HandEye
-from gym_handeye.mock_handeye import MockHandEye
-
+from gym_handeye.handeye import HandEyeSimulator
 
 register(
     id='HandEye3-v0',
