@@ -1,6 +1,7 @@
 import gym_handeye as he
 
 
+# TODO: possibly change into something different? (read articles)
 def get_all_possible_transitions(grid_size):
     """
     Returns all possible transitions of environment
@@ -28,15 +29,15 @@ def get_all_possible_transitions(grid_size):
                 start[i] = 'g'
                 start[j] = 'b'
 
-            mock_handeye = he.MockHandEye(grid_size, True, False)
+            mock_handeye = he.HandEyeSimulator(grid_size, True, False)
             mock_handeye.parse_observation(start)
 
             for action in actions:
                 mock_handeye.take_action(action)
                 end = mock_handeye.observe()
 
-                if start != end:
-                    states.append((tuple(start), action, tuple(end)))
+                # if start != end:
+                states.append((tuple(start), action, tuple(end)))
 
                 mock_handeye.parse_observation(start)
 
