@@ -293,7 +293,7 @@ class HandEye(gym.Env):
 
         # TODO: perception->setPerception(goalState)
         # (will be done after implementing Action Planning in pyalcs)
-        return
+        return goal_state
 
     @staticmethod
     def get_all_possible_actions():
