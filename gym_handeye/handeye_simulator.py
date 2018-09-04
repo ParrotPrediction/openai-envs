@@ -24,6 +24,13 @@ class HandEyeSimulator():
     """
 
     def __init__(self, grid_size, note_in_hand, test_only_changes):
+        """
+
+        :param grid_size: specifies the size of the monitored plain
+        :param note_in_hand: specifies if the tacticle sensor should switch to '2' if the block is held by the gripper
+        (if False, then goes back to '0')
+        :param test_only_changes: specifies if only condition-action combinations should be tested that invoke a change
+        """
         self.grid_size = grid_size
         self.note_in_hand = note_in_hand
         self.test_only_changes = test_only_changes
@@ -114,29 +121,35 @@ class HandEyeSimulator():
         """
         Executes an action if possible
         :param action: Action to execute
-        :return:
+        :return: True if action was executed
         """
         action_type = ACTION_LOOKUP[action]
 
         if action_type == "N" and self.grip_pos_y > 0:
             self._move_gripper(self.grip_pos_x, self.grip_pos_y - 1)
+            return True
 
         elif action_type == "E" and self.grip_pos_x < self.grid_size - 1:
             self._move_gripper(self.grip_pos_x + 1, self.grip_pos_y)
+            return True
 
         elif action_type == "S" and self.grip_pos_y < self.grid_size - 1:
             self._move_gripper(self.grip_pos_x, self.grip_pos_y + 1)
+            return True
 
         elif action_type == "W" and self.grip_pos_x > 0:
             self._move_gripper(self.grip_pos_x - 1, self.grip_pos_y)
+            return True
 
         elif action_type == "G":
-            self._grip_block()
+            if self._grip_block():
+                return True
 
         elif action_type == "R":
-            self._release_block()
+            if self._release_block():
+                return True
 
-        return
+        return False
 
     def set_random_positions(self):
         """
@@ -241,21 +254,21 @@ class HandEyeSimulator():
 
     def _set_gripper_state(self, observation, state):
         """
-               Sets what gripper feels
-               :param state: BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND
-               :return:
-               """
+        Sets what gripper feels
+        :param state: BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND
+        :return:
+        """
         if state not in [BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND]:
             return
         observation[self.env_size - 1] = state
 
     def _set_grid(self, observation, x, y, observe):
         """
-                Sets what we observe at (x,y)
-                :param x:
-                :param y:
-                :param observe: BLOCK, GRIPPER or SURFACE
-                :return:
+        Sets what we observe at (x,y)
+        :param x:
+        :param y:
+        :param observe: BLOCK, GRIPPER or SURFACE
+        :return:
                 """
         if observe not in [BLOCK, GRIPPER, SURFACE]:
             return

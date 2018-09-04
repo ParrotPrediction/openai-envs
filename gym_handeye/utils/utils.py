@@ -6,8 +6,8 @@ def get_all_possible_transitions(grid_size):
     """
     Returns all possible transitions of environment
     This information is used to calculate the agent's knowledge
-    :param grid_size: size of grid
-    :return: all transitions
+    :param grid_size: size of the grid
+    :return: all transitions as list of tuples: (start_state, action, end_state)
     """
     env_size = grid_size * grid_size + 1
     states = []
@@ -34,6 +34,13 @@ def get_all_possible_transitions(grid_size):
 
 
 def add_transitions(grid_size, start, states):
+    """
+    Adds transitions to the specified list.
+    :param grid_size: size of the grid
+    :param start: start state of the transition
+    :param states: list to which we add a transition
+    :return:
+    """
     actions = he.handeye.HandEye.get_all_possible_actions()
     mock_handeye = he.HandEyeSimulator(grid_size, True, False)
     mock_handeye.parse_observation(start)

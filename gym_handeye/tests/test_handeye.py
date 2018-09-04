@@ -76,16 +76,6 @@ class TestHandEye(unittest.TestCase):
             # then
             self.assertEqual(10, len(p1))
 
-    def test_get_all_possible_transitions(self):
-        # given
-        he = gym.make('HandEye3-v0')
-
-        # when
-        transitions = he.env.get_all_possible_transitions()
-
-        # then
-        self.assertEqual(258, len(transitions)) # 258 is a number from article for grid_size = 3
-
     @staticmethod
     def _random_action():
         return random.choice(list(range(6)))

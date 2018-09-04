@@ -12,6 +12,7 @@ ACTION_LOOKUP = {
     5: 'R'
 }
 
+
 from gym.spaces import Discrete
 import gym_handeye.utils.utils as utils
 from gym_handeye.handeye_simulator import HandEyeSimulator
@@ -134,7 +135,7 @@ class HandEye(gym.Env):
         Returns all possible transitions of environment
         This information is used to calculate the agent's knowledge
         :param self
-        :return: all transitions
+        :return: all transitions as list of tuples: (start_state, action, end_state)
         """
 
         return utils.get_all_possible_transitions(self.grid_size)
