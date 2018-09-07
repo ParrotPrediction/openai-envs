@@ -1,5 +1,6 @@
 import gym_handeye as he
-from gym_handeye.handeye_simulator import SURFACE, BLOCK, GRIPPER, BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND
+from gym_handeye.handeye_simulator import SURFACE, BLOCK, GRIPPER, BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, \
+    BLOCK_IN_HAND
 
 
 def get_all_possible_transitions(grid_size):
@@ -7,7 +8,7 @@ def get_all_possible_transitions(grid_size):
     Returns all possible transitions of environment
     This information is used to calculate the agent's knowledge
     :param grid_size: size of the grid
-    :return: all transitions as list of tuples: (start_state, action, end_state)
+    :return: all transitions as a list of tuples: (start_state, action, end_state)
     """
     env_size = grid_size * grid_size + 1
     states = []
@@ -24,25 +25,25 @@ def get_all_possible_transitions(grid_size):
                     else:
                         start[i] = BLOCK
                         start[env_size - 1] = BLOCK_IN_HAND
-                    add_transitions(grid_size, start, states)
+                    states.extend(get_transitions(grid_size, start))
             else:
                 start[i] = GRIPPER
                 start[j] = BLOCK
-                add_transitions(grid_size, start, states)
+                states.extend(get_transitions(grid_size, start))
 
     return states
 
 
-def add_transitions(grid_size, start, states):
+def get_transitions(grid_size, start):
     """
-    Adds transitions to the specified list.
+    Returns transitions for specified start position.
     :param grid_size: size of the grid
     :param start: start state of the transition
-    :param states: list to which we add a transition
-    :return:
+    :return: transitions as a list of tuples: (start_state, action, end_state)
     """
+    states = []
     actions = he.handeye.HandEye.get_all_possible_actions()
-    mock_handeye = he.HandEyeSimulator(grid_size, True, False)
+    mock_handeye = he.HandEyeSimulator(grid_size, True)
     mock_handeye.parse_observation(start)
 
     for action in actions:
@@ -53,11 +54,4 @@ def add_transitions(grid_size, start, states):
             states.append((tuple(start), action, tuple(end)))
 
         mock_handeye.parse_observation(start)
-    return
-
-
-if __name__ == "__main__":
-    print(len(get_all_possible_transitions(2)))
-    print(len(get_all_possible_transitions(3)))
-    print(len(get_all_possible_transitions(4)))
-    print(len(get_all_possible_transitions(5)))
+    return states
