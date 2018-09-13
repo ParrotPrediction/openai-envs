@@ -1,3 +1,4 @@
+import io
 import logging
 import random
 import sys
@@ -33,7 +34,7 @@ class MazeObservationSpace(gym.Space):
 
 
 class AbstractMaze(gym.Env):
-    metadata = {'render.modes': ['human']}
+    metadata = {'render.modes': ['human', 'ansi']}
 
     def __init__(self, matrix):
         self.maze = Maze(matrix)
@@ -59,17 +60,12 @@ class AbstractMaze(gym.Env):
         return self._observe()
 
     def render(self, mode='human'):
-        logging.debug("Rendering the environment")
         if mode == 'human':
-            outfile = sys.stdout
-            outfile.write("\n")
-
-            situation = np.copy(self.maze.matrix)
-            situation[self.pos_y, self.pos_x] = ANIMAT_MARKER
-
-            for row in situation:
-                outfile.write(" ".join(self._render_element(el) for el in row))
-                outfile.write("\n")
+            self._render_to_file(sys.stdout)
+        elif mode == 'ansi':
+            output = io.StringIO()
+            self._render_to_file(output)
+            return output.getvalue()
         else:
             super(AbstractMaze, self).render(mode=mode)
 
@@ -142,6 +138,16 @@ class AbstractMaze(gym.Env):
         starting_position = random.choice(possible_coords)
         self.pos_x = starting_position[0]
         self.pos_y = starting_position[1]
+
+    def _render_to_file(self, outfile):
+        outfile.write("\n")
+
+        situation = np.copy(self.maze.matrix)
+        situation[self.pos_y, self.pos_x] = ANIMAT_MARKER
+
+        for row in situation:
+            outfile.write(" ".join(self._render_element(el) for el in row))
+            outfile.write("\n")
 
     @staticmethod
     def is_wall(perception):
