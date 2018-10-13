@@ -41,7 +41,7 @@ class TestBooleanMultiplexer:
         mp.reset()
 
         # when
-        state = mp.render()
+        state = mp.render('ansi')
 
         # then
         assert state is not None
