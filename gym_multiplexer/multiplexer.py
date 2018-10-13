@@ -1,5 +1,3 @@
-import random
-
 import gym
 
 from .utils import get_correct_answer
