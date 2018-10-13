@@ -14,7 +14,7 @@ class Multiplexer(gym.Env):
 
   def __init__(self, control_bits=3) -> None:
     self.control_bits = control_bits
-    self.metadata = {'render.modes': ['human']}
+    self.metadata = {'render.modes': ['human', 'ansi']}
 
     self._state = None
     self._validation_bit = 0
@@ -35,9 +35,11 @@ class Multiplexer(gym.Env):
 
   def render(self, mode='human'):
       if mode == 'human':
+          print(self._observation)
+      elif mode == 'ansi':
           return self._observation
-
-      return self.render(mode=mode)
+      else:
+          super(Multiplexer, self).render(mode=mode)
 
   @property
   def _observation(self) -> list:
