@@ -10,7 +10,7 @@ setup(name='parrotprediction-openai-envs',
       license='MIT',
       packages=find_packages(),
       install_requires=[
-          'numpy'
+          'numpy',
           'gym>=0.10',
           'networkx==2.0',
           'bitstring==3.1.5'
