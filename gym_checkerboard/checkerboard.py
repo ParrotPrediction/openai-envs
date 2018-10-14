@@ -1,4 +1,5 @@
 import logging
+from typing import List
 
 import gym
 import numpy as np
@@ -8,16 +9,17 @@ from gym_checkerboard.checkerboard_simulator import CheckerboardSimulator
 
 logger = logging.getLogger(__name__)
 
+
 class Checkerboard(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
 
     REWARD = 1
 
-    def __init__(self, dim: int, ndiv: int):
+    def __init__(self, dim: int, ndiv: int) -> None:
         logger.debug("Initializing environment")
         self._dim = dim
         self._board = CheckerboardSimulator(dim, ndiv)
-        self._state = None
+        self._state: List = []
         self._validation_bit = 0
 
         self.action_space = Discrete(2)

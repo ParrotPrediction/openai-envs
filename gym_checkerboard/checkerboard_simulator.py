@@ -3,9 +3,10 @@ import numpy as np
 WHITE = 0
 BLACK = 1
 
+
 class CheckerboardSimulator:
 
-    def __init__(self, dim: int, ndiv: int):
+    def __init__(self, dim: int, ndiv: int) -> None:
         """
         :param n: dimensionality of solution space
         :param nd: division of each dimension,
@@ -36,7 +37,3 @@ class CheckerboardSimulator:
     def _get_index(self, val: float) -> int:
         y = np.linspace(0, 1, self.nd + 1)
         return np.where(y <= val)[0][-1]
-
-
-
-

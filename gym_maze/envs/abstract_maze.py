@@ -84,8 +84,8 @@ class AbstractMaze(gym.Env):
     def get_all_possible_transitions(self):
         """
         Debugging only
-        
-        :return: 
+
+        :return:
         """
         return get_all_possible_transitions(self)
 

@@ -5,7 +5,8 @@ import logging
 
 from gym.spaces import Discrete
 import gym_handeye.utils.utils as utils
-from gym_handeye.handeye_simulator import HandEyeSimulator, SURFACE, BLOCK, GRIPPER, ACTION_LOOKUP
+from gym_handeye.handeye_simulator import HandEyeSimulator, SURFACE, BLOCK, \
+    GRIPPER, ACTION_LOOKUP
 
 
 class HandEye(gym.Env):
@@ -15,10 +16,12 @@ class HandEye(gym.Env):
         """
 
         :param grid_size: specifies the size of the monitored plain
-        :param note_in_hand: specifies if the tacticle sensor should switch to '2' if the block is held by the gripper
+        :param note_in_hand: specifies if the tacticle sensor should
+        switch to '2' if the block is held by the gripper
         (if False, then goes back to '0')
-        :param test_only_changes: specifies if only condition-action combinations should be tested that invoke
-        a change (1), non changes (-1) or all possibilities (0) should be tested
+        :param test_only_changes: specifies if only condition-action
+        combinations should be tested that invoke a change (1),
+        non changes (-1) or all possibilities (0) should be tested
         """
         logging.debug('Starting environment HandEye')
         self.grid_size = grid_size
@@ -35,12 +38,16 @@ class HandEye(gym.Env):
     def step(self, action):
         """
         Run one timestep of the environment's dynamics.
-        Accepts an action and returns a tuple (observation, reward, done, info).
+        Accepts an action and returns a tuple
+        (observation, reward, done, info).
         :param action: an action provided by the environment
-        :return: observation (tuple): agent's observation of the current environment
+        :return: observation (tuple): agent's observation of
+        the current environment
             reward (float) : amount of reward returned after previous action
-            done (boolean): whether the episode has ended, in which case further step() calls will return undefined results
-            info (dict): contains auxiliary diagnostic information (helpful for debugging, and sometimes learning)
+            done (boolean): whether the episode has ended, in which case
+            further step() calls will return undefined results
+            info (dict): contains auxiliary diagnostic information
+            (helpful for debugging, and sometimes learning)
         """
 
         logging.debug('Executing a step, action = {}'.format(action))
@@ -71,6 +78,7 @@ class HandEye(gym.Env):
     def render(self, mode='human', close=False):
         """
         Renders the environment.
+        :param mode:
         :param mode (str): the mode to render with
         :param close (bool): close all open renderings
         :return:
@@ -124,32 +132,37 @@ class HandEye(gym.Env):
         Returns all possible transitions of the environment
         This information is used to calculate the agent's knowledge
         :param self
-        :return: all transitions as list of tuples: (start_state, action, end_state)
+        :return: all transitions as list of tuples:
+        (start_state, action, end_state)
         """
 
         return utils.get_all_possible_transitions(self.grid_size)
 
     def get_goal_state(self):
         """
-        Returns goal_state - an observation that is the environment's next goal.
-        Non deterministic.
+        Returns goal_state - an observation that is the environment's
+        next goal. Non deterministic.
         :return:
         """
         return self.handeye.get_goal_state()
 
     def _should_end_testing(self, previous, obs):
         """
-        Returns if the test should end based on self.test_only_changes parameter.
+        Returns if the test should end based on self.test_only_changes
+        parameter.
         :param previous: previous observation
         :param obs: current observation
         :return:
         """
-        return (self.test_only_changes == 1 and not self._change_detected(previous, obs)) or (
-                self.test_only_changes == -1 and self._change_detected(previous, obs))
+        return (self.test_only_changes == 1 and not self._change_detected(
+            previous, obs)) or (self.test_only_changes == -1 and
+                                self._change_detected(previous, obs))
 
-    def _change_detected(self, previous, current):
+    @staticmethod
+    def _change_detected(previous, current):
         """
-        Returns true if a change was detected between observations (previous and current).
+        Returns true if a change was detected between
+        observations (previous and current).
         :param previous: previous observation
         :param current: current observation
         :return:
@@ -165,7 +178,8 @@ class HandEye(gym.Env):
 
     def _take_action(self, action):
         """
-        Executes an action with all consequences. Returns true if executing an action was successful.
+        Executes an action with all consequences.
+        Returns true if executing an action was successful.
         :param action:
         :return:
         """

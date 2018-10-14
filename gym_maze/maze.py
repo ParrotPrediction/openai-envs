@@ -6,7 +6,7 @@ REWARD_MAPPING = 9
 class Maze:
     """
     Creates new maze.
-    
+
     Mapping:
     0 - path
     1 - wall

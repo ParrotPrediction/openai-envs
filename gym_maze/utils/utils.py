@@ -10,7 +10,7 @@ def get_all_possible_transitions(maze):
     [POINT]->[ACTION]->[POINT]
     This information is used to calculate the agent's knowledge
     :param maze: an instance of the maze
-    :return: 
+    :return:
     """
     transitions = []
 

@@ -33,7 +33,7 @@ class TestBooleanMultiplexer:
         assert 7 == len(state)
         assert type(state) is list
         for obs in state:
-          assert obs in [0, 1]
+            assert obs in [0, 1]
 
     def test_should_render_state(self):
         # given
@@ -64,7 +64,7 @@ class TestBooleanMultiplexer:
         assert reward in [0, 1000]
         assert done is True
         for obs in state:
-          assert obs in [0, 1]
+            assert obs in [0, 1]
 
     def test_execute_multiple_steps_and_keep_constant_perception_length(self):
         # given

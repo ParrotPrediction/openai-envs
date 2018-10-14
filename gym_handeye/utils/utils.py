@@ -1,5 +1,6 @@
 import gym_handeye as he
-from gym_handeye.handeye_simulator import SURFACE, BLOCK, GRIPPER, BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, \
+from gym_handeye.handeye_simulator import SURFACE, BLOCK, GRIPPER, \
+    BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, \
     BLOCK_IN_HAND
 
 
@@ -8,7 +9,8 @@ def get_all_possible_transitions(grid_size):
     Returns all possible transitions of environment
     This information is used to calculate the agent's knowledge
     :param grid_size: size of the grid
-    :return: all transitions as a list of tuples: (start_state, action, end_state)
+    :return: all transitions as a list of tuples:
+    (start_state, action, end_state)
     """
     env_size = grid_size * grid_size + 1
     states = []

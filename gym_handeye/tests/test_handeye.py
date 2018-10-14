@@ -49,7 +49,7 @@ class TestHandEye:
         # then
         assert state is not None
         assert tuple == type(state)
-        assert done == False
+        assert done is False
         for i, obs in enumerate(state):
             if i < 9:
                 assert obs in ['w', 'b', 'g']

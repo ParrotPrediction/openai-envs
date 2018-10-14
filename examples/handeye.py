@@ -1,5 +1,4 @@
 import logging
-from random import choice
 
 import gym
 
@@ -11,22 +10,20 @@ logging.basicConfig(level=logging.DEBUG)
 if __name__ == '__main__':
     hand_eye = gym.make('HandEye3-v0')
 
-    possible_actions = list(range(6))
-
     for i_episode in range(1):
         observation = hand_eye.reset()
 
         for t in range(100):
-            logging.info("Time: [{}], observation: [{}]".format(t, observation))
+            logging.info(f"Time: [{t}], observation: [{observation}]")
 
-            action = choice(possible_actions)
+            action = hand_eye.action_space.sample()
 
-            logging.info("\t\tExecuted action: [{}]".format(action))
+            logging.info(f"\t\tExecuted action: [{action}]")
             observation, reward, done, info = hand_eye.step(action)
 
             if done:
-                logging.info("Episode finished after {} timesteps.".format(t + 1))
-                logging.info("Last reward: {}".format(reward))
+                logging.info(f"Episode finished after {t+1} timesteps.")
+                logging.info(f"Last reward: {reward}")
                 break
 
     logging.info("Finished")

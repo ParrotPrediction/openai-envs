@@ -34,7 +34,8 @@ class HandEyeSimulator:
         """
 
         :param grid_size: specifies the size of the monitored plain
-        :param note_in_hand: specifies if the tacticle sensor should switch to '2' if the block is held by the gripper
+        :param note_in_hand: specifies if the tacticle sensor should
+        switch to '2' if the block is held by the gripper
         (if False, then goes back to '0')
         """
         self.grid_size = grid_size
@@ -91,7 +92,8 @@ class HandEyeSimulator:
 
     def set_random_positions(self):
         """
-        Non deterministic function, sets block on random position, then sets block in hand or not
+        Non deterministic function, sets block on random position,
+        then sets block in hand or not
         (if not in hand, then sets griper on random position).
         :return: observation after setting block and gripper
         """
@@ -113,7 +115,8 @@ class HandEyeSimulator:
 
     def parse_observation(self, observation):
         """
-        Function that sets current environment state so that it matches observation.
+        Function that sets current environment state so that it
+        matches observation.
         :param observation: list with observation space for this environment,
         ex. ['w', 'g', 'w', 'w', 'w', 'b', 'w', 'w', 'w', '0']
         :return:
@@ -147,7 +150,8 @@ class HandEyeSimulator:
     def _move_gripper(self, x_end, y_end):
         """
         Executes a moving action with all involved consequences.
-        Important: doesn't check if the moving action is possible (if the x_end, y_end position exists).
+        Important: doesn't check if the moving action is possible
+        (if the x_end, y_end position exists).
         :param x_end: End gripper x position
         :param y_end: End gripper y position
         :return:
@@ -206,7 +210,8 @@ class HandEyeSimulator:
         """
         if self.block_in_hand:
             self._set_observation_gripper_state(BLOCK_UNDER_GRIPPER)
-            self._set_observation_grid(self.grip_pos_x, self.grip_pos_y, GRIPPER)
+            self._set_observation_grid(self.grip_pos_x, self.grip_pos_y,
+                                       GRIPPER)
             self.block_in_hand = False
             return True
 
@@ -226,7 +231,8 @@ class HandEyeSimulator:
         Checks if gripper is above block
         :return: True if gripper is above block
         """
-        return self.block_pos_x == self.grip_pos_x and self.block_pos_y == self.grip_pos_y
+        return self.block_pos_x == self.grip_pos_x \
+            and self.block_pos_y == self.grip_pos_y
 
     def _set_block_in_hand(self):
         """
@@ -259,11 +265,14 @@ class HandEyeSimulator:
     def _set_gripper_state(self, observation, state):
         """
         Sets what gripper feels in 'observation' list.
-        :param state: BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND
+        :param state: BLOCK_NOT_UNDER_GRIPPER,
+        BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND
         :return:
         """
-        if state not in [BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND]:
-            raise ValueError("State should be in [{}, {}, {}]".format(BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND))
+        if state not in [BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER,
+                         BLOCK_IN_HAND]:
+            raise ValueError("State should be in [{}, {}, {}]".format(
+                BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND))
         observation[self.env_size - 1] = state
 
     def _set_grid(self, observation, x, y, observe):
@@ -275,7 +284,9 @@ class HandEyeSimulator:
         :return:
                 """
         if observe not in [BLOCK, GRIPPER, SURFACE]:
-            raise ValueError("Observation should be in [{},  {}, {}]".format(BLOCK, GRIPPER, SURFACE))
+            raise ValueError(
+                "Observation should be in [{},  {}, {}]".format(BLOCK, GRIPPER,
+                                                                SURFACE))
         observation[y * self.grid_size + x] = observe
 
     def _set_observation_grid(self, x, y, observe):
@@ -291,7 +302,8 @@ class HandEyeSimulator:
     def _set_observation_gripper_state(self, state):
         """
         Sets what gripper feels in self.observation.
-        :param state: BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND
+        :param state: BLOCK_NOT_UNDER_GRIPPER,
+        BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND
         :return:
         """
         self._set_gripper_state(self.observation, state)
@@ -309,7 +321,8 @@ class HandEyeSimulator:
     def _set_goal_gripper_state(self, state):
         """
         Sets what gripper feels in self.goal_state.
-        :param state: BLOCK_NOT_UNDER_GRIPPER, BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND
+        :param state: BLOCK_NOT_UNDER_GRIPPER,
+        BLOCK_UNDER_GRIPPER, BLOCK_IN_HAND
         :return:
         """
         self._set_gripper_state(self.goal_state, state)
@@ -378,7 +391,8 @@ class HandEyeSimulator:
 
     def _state_move_with_block(self):
         """
-        Changes the goal_state: the gripper is moving with block in hand to random position.
+        Changes the goal_state: the gripper is moving with
+        block in hand to random position.
         :return:
         """
         while True:
@@ -401,7 +415,8 @@ class HandEyeSimulator:
 
     def _state_move_not_over_block(self):
         """
-        Changes the goal_state: the gripper is in random position not over block.
+        Changes the goal_state: the gripper is in random
+        position not over block.
         :return:
         """
         while True:
