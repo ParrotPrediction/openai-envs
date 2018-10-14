@@ -1,18 +1,15 @@
 language: python
-
 python:
-  - '3.7-dev'
-
+- 3.7-dev
 script:
-  - pip install -r requirements.txt
-  - make test
-
+- pip install -r requirements.txt
+- make test
 deploy:
   skip_cleanup: true
   provider: pypi
   user: khozzy
   password:
-    secure: U7bfuxnP8i/5roS1frPVi3EuYSw2YmNGwnGumr2Fw+GRbzYP0AyB+pTzZ9CbKk8A8gCWnsGR+ky00SdLcAAmzpoui9QxPlr1ndRy/z8W7KY5EGe2R65VoM1ztCOH3ZtclfGrQAMYHz4HLvXrGbkf5+xeYRhhW/tC4fH+VwHMNH8eT+e2+1xLkHTBQr0Devp1Qthl3EMJhIUSiCtj15wR+k9a3hN/plLTFWFuHg82OTmuh2UkKJ1z9kxLxPRC2+cB7XivPKcPW9MpEDr4jzh+T+4SpjxNbL6hzXMGUz/6FXv8IUojjN5OjsOsKzEY5B2tWSs81z+NCgS8EVggYDmtQHSL+O1jdEBLUpNRLaVYoH6fbsBVujEzNnPw1fbk5idlMUpQfxrDg/CbPL5lQ7XQ9OiS7/LRz98v1NwSwzARGNGgOx9yFBpsmPyfVA/2xzrGCLppkaftGSwPegxGe5w0ULFo/ITmaG4Sux1JBsODkWGParDlTXtcGMjWlZOhBTm+nlobeIxMtSG+M//+xOcE2KqdOkPFYZgSEDeqZoO1pglmxMso8FTGYcOWUW/wEErwP6MFAllWWwVPOPTAS++Ll3jJBhGNXyo9ZuKlXBTk/immrWoGUNHfCZXkblfvmo4D7vMg2HLyKbgAdShfLX/M8kYGzQTw8JtflhcgsuaygSU=
+    secure: bWz/Yx1lpi6440OJPWRXtoGlggTCPPQ8KOWKqpRCInuMvp18jf96ogBd6yupCZfiN5K3nDUE4dKyW/rxfB4+LflA2hyXF6/w50mSd17/zTVWzwimfeHEvnWSv3B5AfKfStvH/4G4nAH9wJTD6iNtKW3taTy+8GVmk6+OXQB7NdPvGc2DBjUmHlNeL9rr42J0lM1sUWcJQGjXqfB2yWRUsP+KJTTbSxQmcyidIA665Do9nZeey0wpJ6ZEFs0oaKujV+daOkHzxFPM0J70e74bQetsnKoD8c61fR8KCuL1/07YigV4dCW169bXxZaXs9GZzPq2WzxZADwOwaHlTlB+ThbeRIJPea+NyP10XLUdZ2DoiK9AAQrciWe2vYWTwcXAacvCq3gJpAk21xPkA1yoFavrr4qDQiwqJ6od6ezy4twwMbGN15NfNBklmM2Yyitja5Oba3Nvph+2XNHrowZzwE3Y0aGiCybA/yIXncVLqYz6w3HucVxaRLZk20geVxhaUfkEPnXVAjZtccETLMVmTxsUfe1HqNi8aEupOVk92ocBV0HG3RGh5Aew7SfwXrvD3zpwK+I3zh79jPqmUEhDSLpIpdrlVguQHDWPn1Tk4GZbKw6gwfWjMyn2lQOk4iF5tcnrYI5XGZYRGgR8oZGO1QN6nJM2OzMH3WlBJ1yPvpQ=
   on:
     tags: true
     branch: master
