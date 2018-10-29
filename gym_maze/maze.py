@@ -1,3 +1,5 @@
+import random
+
 PATH_MAPPING = 0
 WALL_MAPPING = 1
 REWARD_MAPPING = 9
@@ -174,3 +176,13 @@ class Maze:
         nw = (pos_x - 1, pos_y - 1)
 
         return n, ne, e, se, s, sw, w, nw
+
+    def get_goal_state(self):
+        pos_x = random.randint(0, self.max_x - 1)
+        pos_y = random.randint(0, self.max_y - 1)
+
+        while self.matrix[pos_y, pos_x] == WALL_MAPPING:
+            pos_x = random.randint(0, self.max_x - 1)
+            pos_y = random.randint(0, self.max_y - 1)
+
+        return self.perception(pos_x, pos_y)
