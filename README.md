@@ -11,6 +11,7 @@ The repository contains environments used in LCS literature that are compliant w
 - Real Multiplexer
 - Hand Eye
 - Checkerboard
+- Real-valued toy problems
 
 For usage examples look at [examples/](examples) directory.
 
