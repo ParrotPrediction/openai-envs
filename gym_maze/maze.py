@@ -177,12 +177,12 @@ class Maze:
 
         return n, ne, e, se, s, sw, w, nw
 
-    def get_goal_state(self):
-        pos_x = random.randint(0, self.max_x - 1)
-        pos_y = random.randint(0, self.max_y - 1)
+    def get_goal_state(self, pos_x, pos_y):
+        new_x = random.randint(0, self.max_x - 1)
+        new_y = random.randint(0, self.max_y - 1)
 
-        while self.matrix[pos_y, pos_x] == WALL_MAPPING:
-            pos_x = random.randint(0, self.max_x - 1)
-            pos_y = random.randint(0, self.max_y - 1)
+        while self.matrix[new_y, new_x] == WALL_MAPPING:
+            new_x = random.randint(0, self.max_x - 1)
+            new_y = random.randint(0, self.max_y - 1)
 
-        return self.perception(pos_x, pos_y)
+        return self.perception(new_x, new_y)
