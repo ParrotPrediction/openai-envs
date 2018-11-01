@@ -4,6 +4,10 @@ PATH_MAPPING = 0
 WALL_MAPPING = 1
 REWARD_MAPPING = 9
 
+STATE_ONE_STEP = 0
+STATE_SECOND_STEP = 1
+STATE_OVER = 2
+
 
 class Maze:
     """
@@ -19,6 +23,9 @@ class Maze:
         self.matrix = matrix
         self.max_x = self.matrix.shape[1]
         self.max_y = self.matrix.shape[0]
+
+        self._goal_x, self._goal_y = self._get_reward_state()
+        self._goal_generator_state = STATE_OVER
 
     def get_possible_insertion_coordinates(self):
         """
@@ -177,12 +184,28 @@ class Maze:
 
         return n, ne, e, se, s, sw, w, nw
 
-    def get_goal_state(self, pos_x, pos_y):
-        new_x = random.randint(0, self.max_x - 1)
-        new_y = random.randint(0, self.max_y - 1)
+    def get_goal_state(self):
+        if self._goal_generator_state == STATE_OVER:
+            pos_x, pos_y = random.choice(self.get_possible_neighbour_cords(
+                        self._goal_x, self._goal_y))
+            while not self.is_path(pos_x, pos_y):
+                pos_x, pos_y = random.choice(self.get_possible_neighbour_cords(
+                        self._goal_x, self._goal_y))
+            self._goal_generator_state = STATE_ONE_STEP
+            return self.perception(pos_x, pos_y)
 
-        while self.matrix[new_y, new_x] == WALL_MAPPING:
-            new_x = random.randint(0, self.max_x - 1)
-            new_y = random.randint(0, self.max_y - 1)
+        if self._goal_generator_state == STATE_ONE_STEP:
+            self._goal_generator_state = STATE_SECOND_STEP
+            return self.perception(self._goal_x, self._goal_y)
 
-        return self.perception(new_x, new_y)
+        if self._goal_generator_state == STATE_SECOND_STEP:
+            self._goal_generator_state = STATE_OVER
+            return None
+
+        return None
+
+    def _get_reward_state(self):
+        for i in range(0, self.max_x):
+            for j in range(0, self.max_y):
+                if self.is_reward(i, j):
+                    return i, j
