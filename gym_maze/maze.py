@@ -185,7 +185,7 @@ class Maze:
         return n, ne, e, se, s, sw, w, nw
 
     def get_goal_state(self, current_x, current_y):
-        if '9' in self.perception(current_x, current_y):
+        if str(REWARD_MAPPING) in self.perception(current_x, current_y):
             self._goal_generator_state = STATE_SECOND_STEP
             return self.perception(self._goal_x, self._goal_y)
 
@@ -201,8 +201,6 @@ class Maze:
                     self._goal_x, self._goal_y))
             self._goal_generator_state = STATE_ONE_STEP
             return self.perception(pos_x, pos_y)
-
-        return None
 
     def _get_reward_state(self):
         for i in range(0, self.max_x):
