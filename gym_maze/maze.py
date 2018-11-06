@@ -7,12 +7,8 @@ REWARD_MAPPING = 9
 
 class Maze:
     """
-    Creates new maze.
-
-    Mapping:
-    0 - path
-    1 - wall
-    9 - reward
+    An internal representation of a maze. This class is used by AbstractMaze,
+    which in turn exposes a Gym-compatible API.
     """
 
     def __init__(self, matrix):
