@@ -70,13 +70,6 @@ register(
 )
 
 register(
-    id='BMaze4-v0',
-    entry_point='gym_maze.envs:BMaze4',
-    max_episode_steps=50,
-    nondeterministic=False
-)
-
-register(
     id='Woods1-v0',
     entry_point='gym_maze.envs:Woods1',
     max_episode_steps=50,

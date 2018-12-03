@@ -6,6 +6,5 @@ from gym_maze.envs.MazeF4 import MazeF4
 from gym_maze.envs.Maze4 import Maze4
 from gym_maze.envs.Maze5 import Maze5
 from gym_maze.envs.Maze6 import Maze6
-from gym_maze.envs.BMaze4 import BMaze4
 from gym_maze.envs.Woods1 import Woods1
 from gym_maze.envs.Woods14 import Woods14
