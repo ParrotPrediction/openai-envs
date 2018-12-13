@@ -15,4 +15,3 @@ class Maze4(AbstractMaze):
             [1, 0, 0, 0, 0, 1, 0, 1],
             [1, 1, 1, 1, 1, 1, 1, 1]
         ]))
-        self.search = True
