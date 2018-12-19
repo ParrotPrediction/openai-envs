@@ -1,12 +1,10 @@
 from setuptools import setup, find_packages
 
 setup(name='openai-envs-taxi',
-      version='2.0.4',
+      version='2.0.5',
       description='Custom environments for OpenAI Gym',
       keywords='acs lcs machine-learning reinforcement-learning openai',
       url='https://github.com/e-dzia/openai-envs',
-      author='Parrot Prediction Ltd.',
-      author_email='contact@parrotprediction.com',
       license='MIT',
       packages=find_packages(),
       install_requires=[
