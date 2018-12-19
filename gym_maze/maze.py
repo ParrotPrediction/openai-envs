@@ -4,10 +4,6 @@ PATH_MAPPING = 0
 WALL_MAPPING = 1
 REWARD_MAPPING = 9
 
-STATE_ONE_STEP = 0
-STATE_SECOND_STEP = 1
-STATE_OVER = 2
-
 
 class Maze:
     """
@@ -186,11 +182,9 @@ class Maze:
 
     def get_goal_state(self, current_x, current_y):
         if str(REWARD_MAPPING) in self.perception(current_x, current_y):
-            self._goal_generator_state = STATE_SECOND_STEP
             return self.perception(self._goal_x, self._goal_y)
 
         elif current_x == self._goal_x and current_y == self._goal_y:
-            self._goal_generator_state = STATE_OVER
             return None
 
         else:
@@ -199,7 +193,6 @@ class Maze:
             while not self.is_path(pos_x, pos_y):
                 pos_x, pos_y = random.choice(self.get_possible_neighbour_cords(
                     self._goal_x, self._goal_y))
-            self._goal_generator_state = STATE_ONE_STEP
             return self.perception(pos_x, pos_y)
 
     def _get_reward_state(self):
