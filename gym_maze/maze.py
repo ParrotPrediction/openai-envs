@@ -21,7 +21,6 @@ class Maze:
         self.max_y = self.matrix.shape[0]
 
         self._goal_x, self._goal_y = self._get_reward_state()
-        self._goal_generator_state = STATE_OVER
 
     def get_possible_insertion_coordinates(self):
         """
