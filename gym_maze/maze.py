@@ -180,6 +180,13 @@ class Maze:
         return n, ne, e, se, s, sw, w, nw
 
     def get_goal_state(self, current_x, current_y):
+        """
+        Goal generator function used in Action Planning.
+        :param current_x:
+        :param current_y:
+        :return:
+            perception of a goal state
+        """
         if str(REWARD_MAPPING) in self.perception(current_x, current_y):
             return self.perception(self._goal_x, self._goal_y)
 
@@ -195,6 +202,11 @@ class Maze:
             return self.perception(pos_x, pos_y)
 
     def _get_reward_state(self):
+        """
+        Returns x, y for reward state.
+        :return:
+            x, y - reward state coordinates
+        """
         for i in range(0, self.max_x):
             for j in range(0, self.max_y):
                 if self.is_reward(i, j):
