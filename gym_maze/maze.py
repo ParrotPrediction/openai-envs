@@ -1,3 +1,5 @@
+import random
+
 PATH_MAPPING = 0
 WALL_MAPPING = 1
 REWARD_MAPPING = 9
@@ -17,6 +19,8 @@ class Maze:
         self.matrix = matrix
         self.max_x = self.matrix.shape[1]
         self.max_y = self.matrix.shape[0]
+
+        self._goal_x, self._goal_y = self._get_reward_state()
 
     def get_possible_insertion_coordinates(self):
         """
@@ -174,3 +178,36 @@ class Maze:
         nw = (pos_x - 1, pos_y - 1)
 
         return n, ne, e, se, s, sw, w, nw
+
+    def get_goal_state(self, current_x, current_y):
+        """
+        Goal generator function used in Action Planning.
+        :param current_x:
+        :param current_y:
+        :return:
+            perception of a goal state
+        """
+        if str(REWARD_MAPPING) in self.perception(current_x, current_y):
+            return self.perception(self._goal_x, self._goal_y)
+
+        elif current_x == self._goal_x and current_y == self._goal_y:
+            return None
+
+        else:
+            pos_x, pos_y = random.choice(self.get_possible_neighbour_cords(
+                self._goal_x, self._goal_y))
+            while not self.is_path(pos_x, pos_y):
+                pos_x, pos_y = random.choice(self.get_possible_neighbour_cords(
+                    self._goal_x, self._goal_y))
+            return self.perception(pos_x, pos_y)
+
+    def _get_reward_state(self):
+        """
+        Returns x, y for reward state.
+        :return:
+            x, y - reward state coordinates
+        """
+        for i in range(0, self.max_x):
+            for j in range(0, self.max_y):
+                if self.is_reward(i, j):
+                    return i, j

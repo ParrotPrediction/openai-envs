@@ -165,3 +165,6 @@ class AbstractMaze(gym.Env):
             return utils.colorize('A', 'red')
         else:
             return utils.colorize(el, 'cyan')
+
+    def get_goal_state(self):
+        return self.maze.get_goal_state(self.pos_x, self.pos_y)
