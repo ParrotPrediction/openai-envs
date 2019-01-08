@@ -14,5 +14,6 @@ if __name__ == '__main__':
         situation = environment.reset()
         environment.render()
         print("\ns:", list(environment.env.decode(situation)))
-        print("g:", list(environment.env.decode(environment.env.get_goal_state())))
+        print("g:", list(environment.env.decode(
+            environment.env.get_goal_state())))
         # environment.render()
