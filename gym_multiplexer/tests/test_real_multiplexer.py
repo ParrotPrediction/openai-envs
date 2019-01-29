@@ -30,9 +30,11 @@ class TestRealMultiplexer:
 
         # then
         assert state is not None
-        assert state[-1] == 0
+        assert state[-1] == 0.0
         assert 7 == len(state)
         assert type(state) is list
+        for attrib in state:
+            assert type(attrib) is float
 
     def test_should_execute_step(self):
         # given
@@ -45,7 +47,8 @@ class TestRealMultiplexer:
 
         # then
         assert state is not None
-        assert state[-1] in [0, 1]
+        assert type(state[-1]) is float
+        assert state[-1] in [0., 1.]
         assert type(state) is list
         assert reward in [0, 1000]
         assert done is True

@@ -46,7 +46,7 @@ class Multiplexer(gym.Env):
     def _observation(self) -> list:
         observation = list(self._state)
         observation.append(self._validation_bit)
-        return observation
+        return list(map(float, observation))
 
     @property
     def _correct_answer(self):
