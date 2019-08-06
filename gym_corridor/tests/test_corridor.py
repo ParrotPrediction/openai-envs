@@ -5,14 +5,12 @@ import gym
 
 # noinspection PyUnresolvedReferences
 import gym_corridor
+from gym_corridor.corridor import MOVE_LEFT, MOVE_RIGHT
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
 
 class TestCorridor:
-
-    MOVE_LEFT = 0
-    MOVE_RIGHT = 1
 
     def test_should_initialize(self):
         # when
@@ -48,7 +46,7 @@ class TestCorridor:
         obs = corr.reset()
 
         while not done:
-            obs, reward, done, _ = corr.step(self.MOVE_LEFT)
+            obs, reward, done, _ = corr.step(MOVE_LEFT)
 
         # then
         assert obs == '1'
@@ -65,7 +63,7 @@ class TestCorridor:
         obs = corr.reset()
 
         while not done:
-            obs, reward, done, _ = corr.step(self.MOVE_RIGHT)
+            obs, reward, done, _ = corr.step(MOVE_RIGHT)
 
         # then
         assert obs == '20'
@@ -81,8 +79,8 @@ class TestCorridor:
             p0 = corr.reset()
 
         # when & then
-        p1, _, _, _ = corr.step(self.MOVE_LEFT)
+        p1, _, _, _ = corr.step(MOVE_LEFT)
         assert int(p1) == int(p0) - 1
 
-        p2, _, _, _ = corr.step(self.MOVE_RIGHT)
+        p2, _, _, _ = corr.step(MOVE_RIGHT)
         assert int(p2) == int(p0)

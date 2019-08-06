@@ -12,9 +12,10 @@ The repository contains environments used in LCS literature that are compliant w
 - Hand Eye
 - Checkerboard
 - Real-valued toy problems
-- 1D Corridor
+- 1D Corridor,
+- 2D Grid
 
-For usage examples look at [examples/](examples) directory.
+For some usage examples look at [examples/](examples) directory.
 
 ## Development
 

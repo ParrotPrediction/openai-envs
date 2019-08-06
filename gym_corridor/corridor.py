@@ -3,9 +3,10 @@ from random import randint
 import gym
 from gym.spaces import Discrete
 
+MOVE_LEFT = 0
+MOVE_RIGHT = 1
 
-# 0 - move left
-# 1 - move right
+
 class Corridor(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
 
@@ -23,9 +24,9 @@ class Corridor(gym.Env):
         return str(self._position)
 
     def step(self, action):
-        if action == 0:
+        if action == MOVE_LEFT:
             self._position -= 1
-        elif action == 1:
+        elif action == MOVE_RIGHT:
             self._position += 1
         else:
             raise ValueError("Illegal action passed")
