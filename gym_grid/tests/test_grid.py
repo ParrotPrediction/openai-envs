@@ -26,12 +26,6 @@ class TestGrid:
         # given
         grid = gym.make('grid-20-v0')
 
-        # for i in range(9000):
-        #     np.random.seed(i)
-        #     px, py = grid.reset()
-        #     if px == "1":
-        #         print(i, px, py)
-
         # handle hitting upper bound
         np.random.seed(42)
         grid.reset()  # (x=7, y=20)
