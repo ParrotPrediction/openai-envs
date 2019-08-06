@@ -11,7 +11,7 @@ setup(name='parrotprediction-openai-envs',
       packages=find_packages(),
       install_requires=[
           'numpy',
-          'gym>=0.10',
+          'gym==0.11',
           'networkx==2.0',
           'bitstring==3.1.5'
       ],
