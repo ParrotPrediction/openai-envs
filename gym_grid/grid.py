@@ -4,8 +4,8 @@ from gym.spaces import Discrete
 
 MOVE_LEFT = 0
 MOVE_RIGHT = 1
-MOVE_UP = 3
-MOVE_DOWN = 4
+MOVE_UP = 2
+MOVE_DOWN = 3
 
 # Food located in [n, n]
 # Observation x,y in [1, n]
