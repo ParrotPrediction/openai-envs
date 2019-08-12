@@ -67,3 +67,42 @@ class TestGrid:
         assert obs == ('20', '20')
         assert reward == 1000
         assert done is True
+
+    def test_should_move_in_each_direction(self):
+        # given
+        grid = gym.make('grid-20-v0')
+        np.random.seed(54)
+        grid.reset()  # (16, 6)
+
+        # when & then
+        state, _, _, _ = grid.step(MOVE_LEFT)
+        assert state == ("15", "6")
+
+        state, _, _, _ = grid.step(MOVE_UP)
+        assert state == ("15", "7")
+
+        state, _, _, _ = grid.step(MOVE_RIGHT)
+        assert state == ("16", "7")
+
+        state, _, _, _ = grid.step(MOVE_DOWN)
+        assert state == ("16", "6")
+
+    def test_should_reach_reward(self):
+        # given
+        grid = gym.make('grid-20-v0')
+
+        # from left
+        np.random.seed(128)
+        grid.reset()  # (19, 20)
+        state, reward, done, _ = grid.step(MOVE_RIGHT)
+        assert state == ("20", "20")
+        assert reward == 1000
+        assert done is True
+
+        # from bottom
+        np.random.seed(342)
+        grid.reset()  # (20, 19)
+        state, reward, done, _ = grid.step(MOVE_UP)
+        assert state == ("20", "20")
+        assert reward == 1000
+        assert done is True
