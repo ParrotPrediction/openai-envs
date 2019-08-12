@@ -2,7 +2,7 @@ from gym.envs.registration import register
 
 from .grid import Grid
 
-max_episode_steps = 9999
+max_episode_steps = 1000
 
 register(
     id='grid-20-v0',
