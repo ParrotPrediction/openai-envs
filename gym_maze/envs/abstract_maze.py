@@ -15,6 +15,13 @@ ANIMAT_MARKER = 5
 
 
 class MazeObservationSpace(gym.Space):
+    """
+    Mapping:
+    0 - path
+    1 - wall
+    9 - reward
+    """
+
     def __init__(self, n):
         # n is the number of visible neighbour fields, typically 8
         self.n = n
