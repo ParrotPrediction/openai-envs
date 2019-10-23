@@ -24,45 +24,44 @@ class Grid(gym.Env):
         self.observation_space = Discrete(2)
         self.action_space = Discrete(4)
 
+        self.reset()
+
     @property
     def _state(self):
         return str(self._pos_x), str(self._pos_y)
+
+    @property
+    def _in_reward(self):
+        return self._pos_x == self._size and self._pos_y == self._size
 
     def reset(self):
         (self._pos_x, self._pos_y) = np.random.randint(
             1, self._size + 1, size=2)
 
-        if self._pos_x == self._size and self._pos_y == self._size:
+        if self._in_reward:
             self.reset()
 
         return self._state
 
     def step(self, action):
         if action == MOVE_LEFT:
-            self._pos_x -= 1
+            if self._pos_x - 1 >= 1:
+                self._pos_x -= 1
         elif action == MOVE_RIGHT:
-            self._pos_x += 1
+            if self._pos_x + 1 <= self._size:
+                self._pos_x += 1
         elif action == MOVE_UP:
-            self._pos_y += 1
+            if self._pos_y + 1 <= self._size:
+                self._pos_y += 1
         elif action == MOVE_DOWN:
-            self._pos_y -= 1
+            if self._pos_y - 1 >= 1:
+                self._pos_y -= 1
         else:
             raise ValueError("Illegal action passed")
 
         # Handle reaching final state
-        if self._pos_x == self._size and self._pos_y == self._size:
+        if self._in_reward:
             return self._state, self.REWARD, True, None
-
-        # Handle leaving grid
-        if self._pos_x == 0:
-            self._pos_x = 1
-        elif self._pos_x == 21:
-            self._pos_x = 20
-
-        if self._pos_y == 0:
-            self._pos_y = 1
-        elif self._pos_y == 21:
-            self._pos_y = 20
 
         # Return default observation
         return self._state, 0, False, None

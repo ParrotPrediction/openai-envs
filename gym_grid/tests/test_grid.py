@@ -60,7 +60,7 @@ class TestGrid:
         grid.reset()
         for _ in range(0, 20):
             grid.step(MOVE_RIGHT)
-        while not done:
+        while not reward == 1000:
             obs, reward, done, _ = grid.step(MOVE_UP)
 
         # then
@@ -106,3 +106,9 @@ class TestGrid:
         assert state == ("20", "20")
         assert reward == 1000
         assert done is True
+
+    def test_foo(self):
+        grid = gym.make('grid-5-v0')
+        grid.reset()
+        grid.render()
+        print("ok")
