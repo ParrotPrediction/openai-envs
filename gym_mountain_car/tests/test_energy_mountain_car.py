@@ -24,4 +24,3 @@ class TestEnergyMountainCar:
         (position, velocity), reward, done, info = env.step(2)
         assert position != 0
         assert velocity != 0
-
