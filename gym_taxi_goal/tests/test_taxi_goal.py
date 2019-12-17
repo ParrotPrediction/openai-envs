@@ -1,7 +1,7 @@
 import gym
 import pytest
 # noinspection PyUnresolvedReferences
-import gym_taxi_goal
+import gym_taxi_goal  # noqa: F401
 
 
 class TestTaxiGoal:

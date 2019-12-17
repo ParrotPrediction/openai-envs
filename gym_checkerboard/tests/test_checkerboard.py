@@ -2,7 +2,7 @@ import gym
 import pytest
 
 # noinspection PyUnresolvedReferences
-import gym_checkerboard
+import gym_checkerboard  # noqa: F401
 
 
 class TestCheckerboard:

@@ -5,7 +5,7 @@ import sys
 import gym
 
 # noinspection PyUnresolvedReferences
-import gym_multiplexer
+import gym_multiplexer  # noqa: F401
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 

@@ -1,6 +1,6 @@
 from gym.envs.registration import register
 
-from .checkerboard import Checkerboard
+from .checkerboard import Checkerboard  # noqa: F401
 
 checkerboard_name = "checkerboard"
 max_episode_steps = 1

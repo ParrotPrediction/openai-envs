@@ -1,6 +1,6 @@
 from gym.envs.registration import register
 
-from .grid import Grid
+from .grid import Grid  # noqa: F401
 
 max_episode_steps = 2000
 

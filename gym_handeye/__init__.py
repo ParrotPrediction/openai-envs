@@ -1,7 +1,7 @@
 from gym.envs.registration import register
 
-from gym_handeye.handeye import HandEye
-from gym_handeye.handeye import HandEyeSimulator
+from gym_handeye.handeye import HandEye  # noqa: F401
+from gym_handeye.handeye import HandEyeSimulator  # noqa: F401
 
 register(
     id='HandEye2-v0',

@@ -12,8 +12,9 @@ The repository contains environments used in LCS literature that are compliant w
 - Hand Eye
 - Checkerboard
 - Real-valued toy problems
-- 1D Corridor,
+- 1D Corridor
 - 2D Grid
+- Mountain Car with energy reward
 
 For some usage examples look at [examples/](examples) directory.
 
@@ -24,4 +25,4 @@ For some usage examples look at [examples/](examples) directory.
 
     pip install -r requirements.txt
     
-    make test
+    python setup.py test

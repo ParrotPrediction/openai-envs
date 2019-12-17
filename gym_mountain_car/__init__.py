@@ -1,4 +1,4 @@
-from gym_mountain_car.EnergyMountainCar import EnergyMountainCar
+from gym_mountain_car.EnergyMountainCar import EnergyMountainCar  # noqa: F401
 from gym.envs.registration import register
 
 register(

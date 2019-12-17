@@ -1,6 +1,6 @@
 from gym.envs.registration import register
 
-from gym_taxi_goal.taxi_goal import TaxiGoalEnv
+from gym_taxi_goal.taxi_goal import TaxiGoalEnv  # noqa: F401
 
 register(
     id='TaxiGoal-v0',

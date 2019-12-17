@@ -4,7 +4,7 @@ import sys
 import gym
 
 # noinspection PyUnresolvedReferences
-import gym_corridor
+import gym_corridor  # noqa: F401
 from gym_corridor.corridor import MOVE_LEFT, MOVE_RIGHT
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)

@@ -1,6 +1,6 @@
 from gym.envs.registration import register
 
-from .corridor import Corridor
+from .corridor import Corridor  # noqa: F401
 
 max_episode_steps = 200
 

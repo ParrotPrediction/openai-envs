@@ -1,7 +1,8 @@
 from gym.envs.registration import register
 
 # noinspection PyUnresolvedReferences
-from .maze import Maze, PATH_MAPPING, WALL_MAPPING, REWARD_MAPPING
+from .maze import Maze  # noqa: F401
+from .maze import PATH_MAPPING, WALL_MAPPING, REWARD_MAPPING  # noqa: F401
 
 ACTION_LOOKUP = {
     0: 'N',
@@ -19,6 +20,7 @@ def find_action_by_direction(direction):
     for key, val in ACTION_LOOKUP.items():
         if val == direction:
             return key
+
 
 register(
     id='MazeF1-v0',

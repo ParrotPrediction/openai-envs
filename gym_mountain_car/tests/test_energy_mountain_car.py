@@ -1,8 +1,7 @@
-import pytest
 import gym
 
 # noinspection PyUnresolvedReferences
-import gym_mountain_car
+import gym_mountain_car  # noqa: F401
 
 
 class TestEnergyMountainCar:

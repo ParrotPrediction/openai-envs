@@ -1,6 +1,6 @@
 import gym
 # noinspection PyUnresolvedReferences
-import gym_maze
+import gym_maze  # noqa: F401
 
 
 class TestUtils:

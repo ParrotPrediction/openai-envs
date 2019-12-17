@@ -1,4 +1,3 @@
-import gym
 from gym.envs.toy_text.taxi import TaxiEnv
 
 STATE_MOVE_TO_PASSENGER = 1

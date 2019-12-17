@@ -1,7 +1,7 @@
 from gym.envs.registration import register
 
-from .boolean_multiplexer import BooleanMultiplexer
-from .real_multiplexer import RealMultiplexer
+from .boolean_multiplexer import BooleanMultiplexer  # noqa: F401
+from .real_multiplexer import RealMultiplexer  # noqa: F401
 
 bool_mpx_name = "boolean-multiplexer"
 real_mpx_name = "real-multiplexer"

@@ -5,7 +5,7 @@ import gym
 import numpy as np
 
 # noinspection PyUnresolvedReferences
-import gym_grid
+import gym_grid  # noqa: F401
 from gym_grid.grid import MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
