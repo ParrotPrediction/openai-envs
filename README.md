@@ -21,8 +21,8 @@ For some usage examples look at [examples/](examples) directory.
 ## Development
 
     conda create --name openai-envs python=3.7
-    source activate openai-envs
+    conda activate openai-envs
 
-    pip install -r requirements.txt
+    pip install -e ".[testing]"
     
     python setup.py test

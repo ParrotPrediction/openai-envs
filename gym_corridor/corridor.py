@@ -15,6 +15,7 @@ class Corridor(gym.Env):
     def __init__(self, size=20):
         self._size = size
         self._position = None
+        self._transitions = self._calculate_transitions()
 
         self.observation_space = Discrete(1)
         self.action_space = Discrete(2)
@@ -47,8 +48,32 @@ class Corridor(gym.Env):
         else:
             raise ValueError('Unknown visualisation mode')
 
+    def get_transitions(self):
+        return self._transitions
+
     def _visualize(self):
         corridor = ["" for _ in range(0, self._size - 1)]
         corridor[self._position - 1] = "X"
         corridor[self._size - 2] = "$"
         return "[" + ".".join(corridor) + "]"
+
+    def _calculate_transitions(self):
+        START, END = 1, self._size
+        LEFT, RIGHT = 0, 1
+
+        def _handle_state(state):
+            moves = []
+            if state == START:
+                moves.append((state, RIGHT, state + 1))
+            else:
+                moves.append((state, LEFT, state - 1))
+                moves.append((state, RIGHT, state + 1))
+
+            return moves
+
+        transitions = []
+
+        for state in range(START, END):
+            transitions += _handle_state(state)
+
+        return transitions

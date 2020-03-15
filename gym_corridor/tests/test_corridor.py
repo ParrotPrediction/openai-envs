@@ -84,3 +84,13 @@ class TestCorridor:
 
         p2, _, _, _ = corr.step(MOVE_RIGHT)
         assert int(p2) == int(p0)
+
+    def test_should_calculate_transitions(self):
+        # given
+        corr = gym.make('corridor-20-v0')
+
+        # when
+        transitions = corr.env.get_transitions()
+
+        # then
+        assert len(transitions) == 37
