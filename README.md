@@ -15,6 +15,7 @@ The repository contains environments used in LCS literature that are compliant w
 - 1D Corridor
 - 2D Grid
 - Mountain Car with energy reward
+- Finite State World (FSW)
 
 For some usage examples look at [examples/](examples) directory.
 
