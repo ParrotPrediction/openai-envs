@@ -20,28 +20,28 @@ class TestFiniteStateWorld:
         state = fsw.reset()
 
         # then
-        assert 0 == state
+        assert '0' == state
 
-    def test_should_follow_optimal_path_and_find_reward(self):
+    def test_should_folloūw_optimal_path_and_find_reward(self):
         # given
         fsw = gym.make('fsw-5-v0')
         fsw.reset()
 
         # when & then
         state, _, _, _ = fsw.step(0)
-        assert state == 1
+        assert state == '1'
 
         state, _, _, _ = fsw.step(1)
-        assert state == 2
+        assert state == '2'
 
         state, _, _, _ = fsw.step(0)
-        assert state == 3
+        assert state == '3'
 
         state, _, _, _ = fsw.step(1)
-        assert state == 4
+        assert state == '4'
 
         state, reward, done, _ = fsw.step(0)
-        assert state == 5
+        assert state == '5'
         assert reward == 100
         assert done is True
 
@@ -52,34 +52,34 @@ class TestFiniteStateWorld:
 
         # when & then
         state, _, _, _ = fsw.step(1)
-        assert state == 5
+        assert state == '5'
 
         state, _, _, _ = fsw.step(0)
-        assert state == 1
+        assert state == '1'
 
         state, _, _, _ = fsw.step(0)
-        assert state == 6
+        assert state == '6'
 
         state, _, _, _ = fsw.step(1)
-        assert state == 2
+        assert state == '2'
 
         state, _, _, _ = fsw.step(1)
-        assert state == 7
+        assert state == '7'
 
         state, _, _, _ = fsw.step(0)
-        assert state == 3
+        assert state == '3'
 
         state, _, _, _ = fsw.step(0)
-        assert state == 8
+        assert state == '8'
 
         state, _, _, _ = fsw.step(1)
-        assert state == 4
+        assert state == '4'
 
         state, _, _, _ = fsw.step(1)
-        assert state == 9
+        assert state == '9'
 
         state, reward, done, _ = fsw.step(0)
-        assert state == 5
+        assert state == '5'
         assert reward == 100
         assert done is True
 

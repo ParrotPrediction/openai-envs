@@ -14,7 +14,7 @@ class FiniteStateWorld(gym.Env):
 
     def reset(self):
         self.pos = 0
-        return self.pos
+        return self._observation
 
     def step(self, action):
         if self.pos >= self.size:
@@ -28,10 +28,14 @@ class FiniteStateWorld(gym.Env):
                 self.pos += self.size
 
         if self.pos == self.size:
-            return self.pos, 100, True, None
+            return self._observation, 100, True, None
 
-        return self.pos, 0, False, None
+        return self._observation, 0, False, None
 
     def render(self, mode='human'):
-        return self.pos
+        return self._observation
+
+    @property
+    def _observation(self):
+        return str(self.pos)
 
