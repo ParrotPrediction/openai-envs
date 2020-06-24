@@ -1,7 +1,7 @@
 import random
 
 PATH_MAPPING = 0
-WALL_MAPPING = 1
+WALLS_MAPPING = [1, 2]
 REWARD_MAPPING = 9
 
 
@@ -90,7 +90,7 @@ class Maze:
         return n, ne, e, se, s, sw, w, nw
 
     def is_wall(self, pos_x, pos_y):
-        return self.matrix[pos_y, pos_x] == WALL_MAPPING
+        return self.matrix[pos_y, pos_x] in WALLS_MAPPING
 
     def is_path(self, pos_x, pos_y):
         return self.matrix[pos_y, pos_x] == PATH_MAPPING

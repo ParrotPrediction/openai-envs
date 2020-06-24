@@ -5,7 +5,7 @@ import numpy as np
 
 class MazeF1(AbstractMaze):
     def __init__(self):
-        super().__init__(np.matrix([
+        super().__init__(np.asarray([
             [1, 1, 1, 1],
             [1, 0, 9, 1],
             [1, 0, 1, 1],

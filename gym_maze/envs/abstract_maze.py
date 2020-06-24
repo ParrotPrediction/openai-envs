@@ -8,7 +8,7 @@ import numpy as np
 from gym import spaces, utils
 
 from gym_maze import ACTION_LOOKUP
-from gym_maze.maze import Maze, WALL_MAPPING
+from gym_maze.maze import Maze, WALLS_MAPPING
 from gym_maze.utils import get_all_possible_transitions
 
 ANIMAT_MARKER = 5
@@ -18,7 +18,7 @@ class MazeObservationSpace(gym.Space):
     """
     Mapping:
     0 - path
-    1 - wall
+    1,2 - wall
     9 - reward
     """
 
@@ -28,10 +28,10 @@ class MazeObservationSpace(gym.Space):
         gym.Space.__init__(self, (self.n,), str)
 
     def sample(self):
-        return tuple(random.choice(['0', '1', '9']) for _ in range(self.n))
+        return tuple(random.choice(['0', '1', '2', '9']) for _ in range(self.n))
 
     def contains(self, x):
-        return all(elem in ('0', '1', '9', str(ANIMAT_MARKER)) for elem in x)
+        return all(elem in ('0', '1', '2', '9', str(ANIMAT_MARKER)) for elem in x)
 
     def to_jsonable(self, sample_n):
         return list(sample_n)
