@@ -7,3 +7,9 @@ register(
     entry_point='gym_fsw:FiniteStateWorld',
     kwargs={'size': 5}
 )
+
+register(
+    id='fsw-10-v0',
+    entry_point='gym_fsw:FiniteStateWorld',
+    kwargs={'size': 10}
+)

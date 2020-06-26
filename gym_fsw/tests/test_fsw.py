@@ -22,7 +22,7 @@ class TestFiniteStateWorld:
         # then
         assert '0' == state
 
-    def test_should_folloūw_optimal_path_and_find_reward(self):
+    def test_should_follow_optimal_path_and_find_reward(self):
         # given
         fsw = gym.make('fsw-5-v0')
         fsw.reset()
@@ -51,35 +51,58 @@ class TestFiniteStateWorld:
         fsw.reset()
 
         # when & then
-        state, _, _, _ = fsw.step(1)
-        assert state == '5'
-
-        state, _, _, _ = fsw.step(0)
-        assert state == '1'
-
-        state, _, _, _ = fsw.step(0)
+        state, _, done, _ = fsw.step(1)
         assert state == '6'
+        assert done is False
 
-        state, _, _, _ = fsw.step(1)
-        assert state == '2'
+        state, _, done, _ = fsw.step(0)
+        assert state == '1'
+        assert done is False
 
-        state, _, _, _ = fsw.step(1)
+        state, _, done, _ = fsw.step(0)
         assert state == '7'
+        assert done is False
 
-        state, _, _, _ = fsw.step(0)
-        assert state == '3'
+        state, _, done, _ = fsw.step(1)
+        assert state == '2'
+        assert done is False
 
-        state, _, _, _ = fsw.step(0)
+        state, _, done, _ = fsw.step(1)
         assert state == '8'
+        assert done is False
 
-        state, _, _, _ = fsw.step(1)
-        assert state == '4'
+        state, _, done, _ = fsw.step(0)
+        assert state == '3'
+        assert done is False
 
-        state, _, _, _ = fsw.step(1)
+        state, _, done, _ = fsw.step(0)
         assert state == '9'
+        assert done is False
+
+        state, _, done, _ = fsw.step(1)
+        assert state == '4'
+        assert done is False
+
+        state, _, done, _ = fsw.step(1)
+        assert state == '10'
+        assert done is False
 
         state, reward, done, _ = fsw.step(0)
         assert state == '5'
         assert reward == 100
         assert done is True
 
+    def test_should_initialize_bigger_environment(self):
+        # given
+        fsw = gym.make('fsw-10-v0')
+        fsw.reset()
+
+        # when ^ then
+        state, _, _, _ = fsw.step(0)
+        assert state == '1'
+
+        state, _, _, _ = fsw.step(1)
+        assert state == '2'
+
+        state, _, _, _ = fsw.step(1)
+        assert state == '13'

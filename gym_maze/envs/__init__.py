@@ -10,5 +10,3 @@ from gym_maze.envs.Maze6 import Maze6
 from gym_maze.envs.MazeT2 import MazeT2
 from gym_maze.envs.MazeT3 import MazeT3
 from gym_maze.envs.MazeT4 import MazeT4
-from gym_maze.envs.Woods1 import Woods1
-from gym_maze.envs.Woods14 import Woods14

@@ -17,15 +17,15 @@ class FiniteStateWorld(gym.Env):
         return self._observation
 
     def step(self, action):
-        if self.pos >= self.size:
-            self.pos = self.pos - self.size + 1
+        if self.pos > self.size:
+            self.pos = self.pos - self.size
         else:
             best_action = self.pos % 2  # alternating shortest action to goal
 
             if action == best_action:
                 self.pos += 1
             else:
-                self.pos += self.size
+                self.pos += self.size + 1
 
         if self.pos == self.size:
             return self._observation, 100, True, None
