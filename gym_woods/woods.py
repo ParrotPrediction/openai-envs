@@ -19,8 +19,8 @@ class Woods:
             extended_original_row = np.concatenate([original_row] * 3)
 
             self.big_board[row_idx, :] = extended_original_row
-            self.big_board[row_idx + 3, :] = extended_original_row
-            self.big_board[row_idx + 6, :] = extended_original_row
+            self.big_board[row_idx + self.max_y, :] = extended_original_row
+            self.big_board[row_idx + 2 * self.max_y, :] = extended_original_row
 
     @property
     def possible_insertion_cords(self):

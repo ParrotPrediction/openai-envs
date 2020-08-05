@@ -10,6 +10,7 @@ class TestWoodsEnvs:
     @pytest.mark.parametrize("_env_name, ", [
         'Woods1-v0',
         'Woods2-v0',
+        'Woods14-v0',
     ])
     def test_should_initialize(self, _env_name):
         # when
@@ -25,6 +26,7 @@ class TestWoodsEnvs:
     @pytest.mark.parametrize("_env_name, ", [
         'Woods1-v0',
         'Woods2-v0',
+        'Woods14-v0',
     ])
     def test_should_reset(self, _env_name):
         # given

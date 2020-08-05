@@ -1,13 +1,6 @@
 from gym.envs.registration import register
 
 register(
-    id='WoodsX-v0',
-    entry_point='gym_woods.envs:WoodsX',
-    max_episode_steps=500,
-    nondeterministic=False
-)
-
-register(
     id='Woods1-v0',
     entry_point='gym_woods.envs:Woods1',
     max_episode_steps=500,
