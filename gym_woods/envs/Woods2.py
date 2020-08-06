@@ -15,7 +15,6 @@ class Woods2(AbstractWoods):
             list('.QOF..QOG..QOF..OOF..OOG..QOG.'),
             list('.QQO..QOO..OOO..OQO..QQO..QOO.'),
             list('.QQQ..OOO..OQO..QOQ..QOQ..OQO.'),
-            list('.QQQ..OOO..OQO..QOQ..QOQ..OQO.'),
             list('..............................'),
             list('..............................'),
             list('.QOG..QOF..OOG..OQF..OOG..OOF.'),
