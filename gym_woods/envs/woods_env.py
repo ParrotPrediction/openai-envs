@@ -1,8 +1,10 @@
 import logging
 import random
+import sys
 
 import gym
-from gym import spaces
+import numpy as np
+from gym import spaces, utils
 
 from gym_maze import ACTION_LOOKUP
 from gym_woods.woods import Woods
@@ -61,7 +63,18 @@ class AbstractWoods(gym.Env):
         return observation, reward, episode_over, {}
 
     def render(self, mode='human'):
-        super(AbstractWoods, self).render(mode=mode)
+        if mode == 'human':
+            snapshot = np.copy(self.maze.matrix)
+            snapshot[self.pos_y, self.pos_x] = 'X'
+
+            sys.stdout.write("\n")
+            for row in snapshot:
+                sys.stdout.write(" ".join(self._render_element(el) for el in row))
+                sys.stdout.write("\n")
+            sys.stdout.flush()
+
+        else:
+            super(AbstractWoods, self).render(mode=mode)
 
     def _take_action(self, action, observation):
         """Executes the action inside the maze"""
@@ -164,3 +177,16 @@ class AbstractWoods(gym.Env):
     @staticmethod
     def is_wall(obs):
         return obs in ['O, Q']
+
+    @staticmethod
+    def _render_element(el):
+        if el in ('O', 'Q'):
+            return utils.colorize('■', 'gray')
+        elif el == '.':
+            return utils.colorize('□', 'white')
+        elif el in ('F', 'G'):
+            return utils.colorize('$', 'yellow')
+        elif el == '*':
+            return utils.colorize('A', 'red')
+        else:
+            return utils.colorize(el, 'cyan')

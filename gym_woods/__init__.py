@@ -21,3 +21,9 @@ register(
     nondeterministic=False
 )
 
+register(
+    id='Woods100-v0',
+    entry_point='gym_woods.envs:Woods100',
+    max_episode_steps=500,
+    nondeterministic=True
+)
