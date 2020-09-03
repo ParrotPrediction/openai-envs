@@ -107,8 +107,13 @@ class TestGrid:
         assert reward == 1000
         assert done is True
 
-    def test_foo(self):
+    def test_should_get_all_states_and_actions(self):
+        # given
         grid = gym.make('grid-5-v0')
         grid.reset()
-        grid.render()
-        print("ok")
+
+        # when
+        mapping = grid.env._state_action()
+
+        # then
+        assert len(mapping) == 25

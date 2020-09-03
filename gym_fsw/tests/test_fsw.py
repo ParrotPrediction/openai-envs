@@ -106,3 +106,14 @@ class TestFiniteStateWorld:
 
         state, _, _, _ = fsw.step(1)
         assert state == '13'
+
+    def test_should_get_all_states_and_actions(self):
+        # given
+        fsw = gym.make('fsw-5-v0')
+        fsw.reset()
+
+        # when
+        mapping = fsw._state_action()
+
+        # then
+        assert len(mapping) == 11

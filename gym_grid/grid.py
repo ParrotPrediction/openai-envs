@@ -92,3 +92,40 @@ class Grid(gym.Env):
                 else:
                     print(f"{'_':^3}", end='')
             print("")
+
+    def _state_action(self):
+        """
+        Return states and possible actions in each of them
+        """
+
+        # Assign all actions for all states
+        mapping = {}
+        for x in range(1, self._size + 1):
+            for y in range(1, self._size + 1):
+                mapping[(x, y)] = [MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN]
+
+        # Remove actions from certain states
+        top_row = dict(filter(lambda i: i[0][0] == self._size, mapping.items()))
+        bottom_row = dict(filter(lambda i: i[0][0] == 1, mapping.items()))
+        left_col = dict(filter(lambda i: i[0][1] == 1, mapping.items()))
+        right_col = dict(filter(lambda i: i[0][1] == self._size, mapping.items()))
+
+        for actions in top_row.values():
+            actions.remove(MOVE_UP)
+
+        for actions in bottom_row.values():
+            actions.remove(MOVE_DOWN)
+
+        for actions in left_col.values():
+            actions.remove(MOVE_LEFT)
+
+        for actions in right_col.values():
+            actions.remove(MOVE_RIGHT)
+
+        # No actions possible when found reward
+        mapping[(20, 20)] = []
+
+        # Cast (int, int) key to (str, str)
+        mapping = {(str(k[0]), str(k[1])): v for k, v in mapping.items()}
+
+        return mapping

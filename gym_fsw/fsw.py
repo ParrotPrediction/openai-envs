@@ -39,3 +39,18 @@ class FiniteStateWorld(gym.Env):
     def _observation(self):
         return str(self.pos)
 
+    def _state_action(self):
+        """
+        Return states and possible actions in each of them
+        """
+        mapping = {}
+        for p in range(0, self.states - 1):
+            mapping[p] = [0, 1]
+
+        # Final state - no actions
+        mapping[self.states] = []
+
+        # Cast int key str
+        mapping = {str(k): v for k, v in mapping.items()}
+
+        return mapping

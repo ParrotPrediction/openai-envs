@@ -190,3 +190,17 @@ class AbstractWoods(gym.Env):
             return utils.colorize('A', 'red')
         else:
             return utils.colorize(el, 'cyan')
+
+    def _state_action(self):
+        """
+        Return states and possible actions in each of them
+        """
+        mapping = {}
+
+        for pic in self.maze.possible_insertion_cords:
+            pass
+
+        # Cast int key str
+        mapping = {str(k): v for k, v in mapping.items()}
+
+        return mapping
