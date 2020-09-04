@@ -6,7 +6,7 @@ import gym
 import numpy as np
 from gym import spaces, utils
 
-from gym_maze import ACTION_LOOKUP
+from gym_maze import ACTION_LOOKUP, find_action_by_direction
 from gym_woods.woods import Woods
 
 
@@ -176,7 +176,7 @@ class AbstractWoods(gym.Env):
 
     @staticmethod
     def is_wall(obs):
-        return obs in ['O, Q']
+        return obs in ['O', 'Q']
 
     @staticmethod
     def _render_element(el):
@@ -197,10 +197,27 @@ class AbstractWoods(gym.Env):
         """
         mapping = {}
 
-        for pic in self.maze.possible_insertion_cords:
-            pass
+        for x, y in self.maze.possible_insertion_cords:
+            [n, ne, e, se, s, sw, w, nw] = self.maze.perception(x, y)
+            key = (x, y)
+            mapping[key] = []
 
-        # Cast int key str
-        mapping = {str(k): v for k, v in mapping.items()}
+            actions_perceptions = {
+                'N': n,
+                'NE': ne,
+                'E': e,
+                'SE': se,
+                'S': s,
+                'SW': sw,
+                'W': w,
+                'NW': nw
+            }
+
+            for action, perception in actions_perceptions.items():
+                if not self.is_wall(perception):
+                    mapping[key].append(find_action_by_direction(action))
+
+        # Cast (int, int) key to (str, str)
+        mapping = {(str(k[0]), str(k[1])): v for k, v in mapping.items()}
 
         return mapping

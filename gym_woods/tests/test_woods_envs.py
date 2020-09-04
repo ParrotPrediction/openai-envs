@@ -116,3 +116,16 @@ class TestWoodsEnvs:
         obs, reward, done, _ = env.step(7)
         _assert_cords(env, max_x, max_y)
         _assert_not_done(reward, done)
+
+    def test_should_get_all_states_and_actions(self):
+        # given
+        woods = gym.make('Woods1-v0')
+        woods.reset()
+
+        # when
+        mapping = woods.env._state_action()
+
+        # then
+        assert len(mapping) == 16
+        assert mapping[('0', '2')] == [0, 4, 5, 6, 7]
+        assert mapping[('3', '0')] == [0, 1, 2, 3, 4, 6, 7]
