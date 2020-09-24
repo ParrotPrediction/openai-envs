@@ -52,7 +52,7 @@ class TestFiniteStateWorld:
 
         # when & then
         state, _, done, _ = fsw.step(1)
-        assert state == '6'
+        assert state == '5'
         assert done is False
 
         state, _, done, _ = fsw.step(0)
@@ -60,7 +60,7 @@ class TestFiniteStateWorld:
         assert done is False
 
         state, _, done, _ = fsw.step(0)
-        assert state == '7'
+        assert state == '6'
         assert done is False
 
         state, _, done, _ = fsw.step(1)
@@ -68,29 +68,22 @@ class TestFiniteStateWorld:
         assert done is False
 
         state, _, done, _ = fsw.step(1)
-        assert state == '8'
+        assert state == '7'
         assert done is False
 
         state, _, done, _ = fsw.step(0)
         assert state == '3'
         assert done is False
 
-        state, _, done, _ = fsw.step(0)
-        assert state == '9'
-        assert done is False
-
         state, _, done, _ = fsw.step(1)
         assert state == '4'
         assert done is False
 
-        state, _, done, _ = fsw.step(1)
-        assert state == '10'
-        assert done is False
-
         state, reward, done, _ = fsw.step(0)
-        assert state == '5'
+        assert state == '10'
         assert reward == 100
         assert done is True
+
 
     def test_should_initialize_bigger_environment(self):
         # given

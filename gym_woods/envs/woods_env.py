@@ -165,6 +165,9 @@ class AbstractWoods(gym.Env):
     def _observe(self):
         return self.maze.perception(self.pos_x, self.pos_y)
 
+    def _perception(self, posx, posy):
+        return self.maze.perception(posx, posy)
+
     def _get_reward(self):
         if self.maze.is_reward(self.pos_x, self.pos_y):
             return 1000
