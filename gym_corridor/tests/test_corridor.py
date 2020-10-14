@@ -18,7 +18,7 @@ class TestCorridor:
 
         # then
         assert corr is not None
-        assert 1 == corr.observation_space.n
+        assert 20 == corr.observation_space.n
         assert 2 == corr.action_space.n
 
     def test_should_visualize(self):
@@ -36,6 +36,19 @@ class TestCorridor:
         assert 1 == vis.count('$')
         assert 18 == vis.count('.')
 
+    def test_should_initialize_in_allowed_position(self):
+        # given
+        corr = gym.make('corridor-20-v0')
+
+        # when
+        init_pos = set()
+        for _ in range(1000):
+            init_pos.add(corr.reset())
+
+        # then
+        assert len(init_pos) == 19
+        assert "19" not in init_pos
+
     def test_should_hit_left_wall(self):
         # given
         corr = gym.make('corridor-20-v0')
@@ -49,7 +62,7 @@ class TestCorridor:
             obs, reward, done, _ = corr.step(MOVE_LEFT)
 
         # then
-        assert obs == '1'
+        assert obs == '0'
         assert reward == 0
         assert done is True
 
@@ -66,7 +79,7 @@ class TestCorridor:
             obs, reward, done, _ = corr.step(MOVE_RIGHT)
 
         # then
-        assert obs == '20'
+        assert obs == '19'
         assert reward == 1000
         assert done is True
 
@@ -94,3 +107,17 @@ class TestCorridor:
 
         # then
         assert len(transitions) == 37
+
+    def test_should_return_state_action_dict(self):
+        # given
+        corr = gym.make('corridor-20-v0')
+
+        # when
+        sa = corr.env._state_action()
+
+        # then
+        assert len(sa) == 20
+        assert sa["0"] == [MOVE_RIGHT]
+        assert sa["19"] == []
+        for i in range(1, 18):
+            assert sa[str(i)] == [MOVE_LEFT, MOVE_RIGHT]
