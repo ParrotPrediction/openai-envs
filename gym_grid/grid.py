@@ -123,7 +123,7 @@ class Grid(gym.Env):
             actions.remove(MOVE_RIGHT)
 
         # No actions possible when found reward
-        mapping[(20, 20)] = []
+        mapping[(self._size, self._size)] = []
 
         # Cast (int, int) key to (str, str)
         mapping = {(str(k[0]), str(k[1])): v for k, v in mapping.items()}

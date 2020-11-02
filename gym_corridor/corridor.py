@@ -83,11 +83,11 @@ class Corridor(gym.Env):
         Return states and possible actions in each of them
         """
         mapping = {}
-        for p in range(1, self._size):
+        for p in range(0, self._size):
             mapping[p] = [MOVE_LEFT, MOVE_RIGHT]
 
         # Corner cases
-        mapping[0] = [MOVE_RIGHT]
+        # mapping[0] = [MOVE_RIGHT]
         mapping[self._size - 1] = []
 
         # Cast int key str
