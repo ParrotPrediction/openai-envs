@@ -9,7 +9,7 @@ class FiniteStateWorld(gym.Env):
         self.size = size
         self.states = size * 2 + 1
 
-        self.observation_space = Discrete(1)
+        self.observation_space = Discrete(self.states)
         self.action_space = Discrete(2)
 
     def reset(self):
@@ -17,17 +17,20 @@ class FiniteStateWorld(gym.Env):
         return self._observation
 
     def step(self, action):
-        if self.pos >= self.size:
-            self.pos = self.pos - self.size + 1
-        else:
-            best_action = self.pos % 2  # alternating shortest action to goal
-
-            if action == best_action:
+        if self.pos < self.size:
+            best_action = self.pos % 2
+            if best_action == action:
                 self.pos += 1
+                if self.pos == self.size:
+                    self.pos = self.size * 2
             else:
                 self.pos += self.size
+        else:
+            self.pos = self.pos - self.size + 1
+            if self.pos == self.size:
+                self.pos = self.size * 2
 
-        if self.pos == self.size:
+        if self.pos == self.size * 2:
             return self._observation, 100, True, None
 
         return self._observation, 0, False, None
@@ -39,3 +42,18 @@ class FiniteStateWorld(gym.Env):
     def _observation(self):
         return str(self.pos)
 
+    def _state_action(self):
+        """
+        Return states and possible actions in each of them
+        """
+        mapping = {}
+        for p in range(0, self.states):
+            mapping[p] = [0, 1]
+
+        # Final state - no actions
+        mapping[self.states - 1] = []
+
+        # Cast int key str
+        mapping = {str(k): v for k, v in mapping.items()}
+
+        return mapping

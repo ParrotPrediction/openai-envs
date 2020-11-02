@@ -91,17 +91,3 @@ register(
     max_episode_steps=50,
     nondeterministic=True
 )
-
-register(
-    id='Woods1-v0',
-    entry_point='gym_maze.envs:Woods1',
-    max_episode_steps=50,
-    nondeterministic=False
-)
-
-register(
-    id='Woods14-v0',
-    entry_point='gym_maze.envs:Woods14',
-    max_episode_steps=50,
-    nondeterministic=False
-)

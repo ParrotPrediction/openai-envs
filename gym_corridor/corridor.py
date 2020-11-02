@@ -17,11 +17,11 @@ class Corridor(gym.Env):
         self._position = None
         self._transitions = self._calculate_transitions()
 
-        self.observation_space = Discrete(1)
+        self.observation_space = Discrete(size)
         self.action_space = Discrete(2)
 
     def reset(self):
-        self._position = randint(1, self._size - 1)
+        self._position = randint(0, self._size - 2)
         return str(self._position)
 
     def step(self, action):
@@ -32,11 +32,11 @@ class Corridor(gym.Env):
         else:
             raise ValueError("Illegal action passed")
 
-        if self._position == self._size:
+        if self._position == self._size - 1:
             return str(self._position), self.REWARD, True, None
 
-        if self._position == 0:
-            self._position = 1
+        if self._position == -1:
+            self._position = 0
 
         return str(self._position), 0, False, None
 
@@ -58,7 +58,7 @@ class Corridor(gym.Env):
         return "[" + ".".join(corridor) + "]"
 
     def _calculate_transitions(self):
-        START, END = 1, self._size
+        START, END = 0, self._size - 1
         LEFT, RIGHT = 0, 1
 
         def _handle_state(state):
@@ -77,3 +77,20 @@ class Corridor(gym.Env):
             transitions += _handle_state(state)
 
         return transitions
+
+    def _state_action(self):
+        """
+        Return states and possible actions in each of them
+        """
+        mapping = {}
+        for p in range(0, self._size):
+            mapping[p] = [MOVE_LEFT, MOVE_RIGHT]
+
+        # Corner cases
+        # mapping[0] = [MOVE_RIGHT]
+        mapping[self._size - 1] = []
+
+        # Cast int key str
+        mapping = {str(k): v for k, v in mapping.items()}
+
+        return mapping
