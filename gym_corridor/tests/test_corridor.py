@@ -117,7 +117,6 @@ class TestCorridor:
 
         # then
         assert len(sa) == 20
-        assert sa["0"] == [MOVE_RIGHT]
         assert sa["19"] == []
-        for i in range(1, 18):
+        for i in range(0, 18):
             assert sa[str(i)] == [MOVE_LEFT, MOVE_RIGHT]

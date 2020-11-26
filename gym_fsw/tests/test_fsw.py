@@ -9,7 +9,7 @@ class TestFiniteStateWorld:
 
         # then
         assert fsw is not None
-        assert 1 == fsw.observation_space.n
+        assert 11 == fsw.observation_space.n
         assert 2 == fsw.action_space.n
 
     def test_should_start_from_initial_position(self):
@@ -41,7 +41,7 @@ class TestFiniteStateWorld:
         assert state == '4'
 
         state, reward, done, _ = fsw.step(0)
-        assert state == '5'
+        assert state == '10'
         assert reward == 100
         assert done is True
 
@@ -98,7 +98,7 @@ class TestFiniteStateWorld:
         assert state == '2'
 
         state, _, _, _ = fsw.step(1)
-        assert state == '13'
+        assert state == '12'
 
     def test_should_get_all_states_and_actions(self):
         # given
