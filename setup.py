@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 install_requires = [
     'numpy',
     'gym==0.11',
-    'networkx==2.0',
-    'bitstring==3.1.5'
+    'networkx==2.5',
+    'bitstring==3.1.7'
 ]
 
 testing_requires = [
