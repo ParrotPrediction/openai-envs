@@ -18,6 +18,24 @@ class TestSimpleMaze:
         assert env.action_space == Discrete(4)
         assert env.env._position is None
 
+    def test_should_return_desired_perception(self, env):
+        assert env.env._perception(1) == list('1010')
+
+    @pytest.mark.parametrize('_p, _s', [
+        ('1001', 0),
+        ('1010', 1),
+        ('1100', 2),
+        ('0111', 3),
+        ('1101', 4),
+        ('0101', 5),
+        ('1011', 6),
+        ('0010', 7),
+        ('0110', 8),
+    ])
+    def test_should_get_state_id(self, _p, _s, env):
+        perception = list(map(int, _p))
+        assert env.env._state_id(perception) == _s
+
     def test_should_reset_state(self, env):
         obs = env.reset()
         assert obs == ['0', '1', '1', '1']

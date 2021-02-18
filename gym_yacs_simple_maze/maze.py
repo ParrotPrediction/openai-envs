@@ -49,7 +49,7 @@ class SimpleMaze(gym.Env):
 
     def reset(self):
         self._position = 3
-        return self._perception()
+        return self._current_perception()
 
     def step(self, action):
         assert action in list(map(int, Action))
@@ -59,12 +59,20 @@ class SimpleMaze(gym.Env):
                 self._position = transition.state
 
         if self._position == 6:
-            return self._perception(), self.REWARD, True, None
+            return self._current_perception(), self.REWARD, True, None
 
-        return self._perception(), 0, False, None
+        return self._current_perception(), 0, False, None
 
-    def _perception(self):
-        return list(map(str, self.PERCEPTIONS[self._position]))
+    def _current_perception(self):
+        return self._perception(self._position)
+
+    def _perception(self, position):
+        return list(map(str, self.PERCEPTIONS[position]))
+
+    def _state_id(self, perception):
+        keys = list(self.PERCEPTIONS.keys())
+        values = list(self.PERCEPTIONS.values())
+        return keys[values.index(perception)]
 
     def render(self, mode='human'):
         return f"State: {self._position}"
