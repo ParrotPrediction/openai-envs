@@ -69,7 +69,7 @@ class AbstractWoods(gym.Env):
 
             sys.stdout.write("\n")
             for row in snapshot:
-                sys.stdout.write(" ".join(self._render_element(el) for el in row))
+                sys.stdout.write(" ".join(self._render(el) for el in row))
                 sys.stdout.write("\n")
             sys.stdout.flush()
 
@@ -182,7 +182,7 @@ class AbstractWoods(gym.Env):
         return obs in ['O', 'Q']
 
     @staticmethod
-    def _render_element(el):
+    def _render(el):
         if el in ('O', 'Q'):
             return utils.colorize('■', 'gray')
         elif el == '.':

@@ -84,7 +84,6 @@ class TestFiniteStateWorld:
         assert reward == 100
         assert done is True
 
-
     def test_should_initialize_bigger_environment(self):
         # given
         fsw = gym.make('fsw-10-v0')

@@ -1,8 +1,6 @@
 import logging
 import gym
-
-# noinspection PyUnresolvedReferences
-import gym_checkerboard
+import gym_checkerboard  # noqa: F401
 
 logging.basicConfig(level=logging.INFO)
 

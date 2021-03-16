@@ -1,5 +1,5 @@
 import gym
-import gym_taxi_goal
+import gym_taxi_goal  # noqa: F401
 
 
 if __name__ == '__main__':

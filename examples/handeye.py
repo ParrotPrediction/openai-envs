@@ -1,9 +1,7 @@
 import logging
 
 import gym
-
-# noinspection PyUnresolvedReferences
-import gym_handeye
+import gym_handeye  # noqa: F401
 
 logging.basicConfig(level=logging.DEBUG)
 
