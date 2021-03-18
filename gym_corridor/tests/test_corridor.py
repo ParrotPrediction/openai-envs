@@ -3,7 +3,6 @@ import sys
 
 import gym
 
-# noinspection PyUnresolvedReferences
 import gym_corridor  # noqa: F401
 from gym_corridor.corridor import MOVE_LEFT, MOVE_RIGHT
 
@@ -30,7 +29,7 @@ class TestCorridor:
         vis = corr.render(mode='ansi')
 
         # then
-        assert 1 <= int(obs) < 20
+        assert 0 <= int(obs) < 19
         assert len(vis) == 22
         assert 1 == vis.count('X')
         assert 1 == vis.count('$')
@@ -88,7 +87,7 @@ class TestCorridor:
         corr = gym.make('corridor-20-v0')
         p0 = corr.reset()
 
-        while p0 in ["1", "19"]:
+        while p0 in ["0", "19"]:
             p0 = corr.reset()
 
         # when & then

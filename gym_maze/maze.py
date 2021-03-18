@@ -1,209 +1,59 @@
-import random
+import io
+import logging
+import sys
 
-PATH_MAPPING = 0
-WALL_MAPPING = 1
-REWARD_MAPPING = 9
+import gym
+from gym import spaces
+
+from gym_maze.common.maze_observation_space import MazeObservationSpace
+from gym_maze.common.maze_renderer import render
+from gym_maze.internal.maze_impl import MazeImpl
+from gym_maze.utils import get_all_possible_transitions
 
 
-class Maze:
-    """
-    An internal representation of a maze. This class is used by AbstractMaze,
-    which in turn exposes a Gym-compatible API.
-    """
+class Maze(gym.Env):
+    metadata = {'render.modes': ['human', 'ansi']}
 
     def __init__(self, matrix):
-        self.matrix = matrix
-        self.max_x = self.matrix.shape[1]
-        self.max_y = self.matrix.shape[0]
+        self.maze = MazeImpl(matrix)
 
-        self._goal_x, self._goal_y = self._get_reward_state()
+        self.action_space = spaces.Discrete(8)
+        self.observation_space = MazeObservationSpace(8)
 
-    def get_possible_insertion_coordinates(self):
-        """
-        Returns a list with coordinates in the environment where
-        an agent can be placed (only on the path).
-        :return: list of tuples (X,Y) containing coordinates
-        """
-        possible_cords = []
-        for x in range(0, self.max_x):
-            for y in range(0, self.max_y):
-                if self.is_path(x, y):
-                    possible_cords.append((x, y))
+    def step(self, action: int):
+        self.maze.move(action)
+        return self._observe(), self._get_reward(), self._is_over(), {}
 
-        return possible_cords
+    def reset(self):
+        logging.debug("Resetting the environment")
+        self.maze.insert_agent()
+        return self._observe()
 
-    def perception(self, pos_x, pos_y):
-        if not self._within_x_range(pos_x):
-            raise ValueError('X position not within allowed range')
-
-        if not self._within_y_range(pos_y):
-            raise ValueError('Y position not within allowed range')
-
-            # Position N
-        if pos_y == 0:
-            n = None
+    def render(self, mode='human'):
+        if mode == 'human':
+            render(sys.stdout, self.maze.matrix)
+        elif mode == 'ansi':
+            output = io.StringIO()
+            render(output, self.maze.matrix)
+            return output.getvalue()
         else:
-            n = str(self.matrix[pos_y - 1, pos_x])
+            super(Maze, self).render(mode=mode)
 
-            # Position NE
-        if pos_x == self.max_x - 1 or pos_y == 0:
-            ne = None
-        else:
-            ne = str(self.matrix[pos_y - 1, pos_x + 1])
+    def _observe(self):
+        return self.maze.perception()
 
-            # Position E
-        if pos_x == self.max_x - 1:
-            e = None
-        else:
-            e = str(self.matrix[pos_y, pos_x + 1])
+    def _get_reward(self):
+        if self._is_over():
+            return 1000
 
-            # Position SE
-        if pos_x == self.max_x - 1 or pos_y == self.max_y - 1:
-            se = None
-        else:
-            se = str(self.matrix[pos_y + 1, pos_x + 1])
+        return 0
 
-            # Position S
-        if pos_y == (self.max_y - 1):
-            s = None
-        else:
-            s = str(self.matrix[pos_y + 1, pos_x])
+    def _is_over(self):
+        return self.maze.is_done()
 
-            # Position SW
-        if pos_x == 0 or pos_y == self.max_y - 1:
-            sw = None
-        else:
-            sw = str(self.matrix[pos_y + 1, pos_x - 1])
+    def get_all_possible_transitions(self):
+        """Debugging only"""
+        return get_all_possible_transitions(self)
 
-            # Position W
-        if pos_x == 0:
-            w = None
-        else:
-            w = str(self.matrix[pos_y, pos_x - 1])
-
-            # Position NW
-        if pos_x == 0 or pos_y == 0:
-            nw = None
-        else:
-            nw = str(self.matrix[pos_y - 1, pos_x - 1])
-
-        return n, ne, e, se, s, sw, w, nw
-
-    def is_wall(self, pos_x, pos_y):
-        return self.matrix[pos_y, pos_x] == WALL_MAPPING
-
-    def is_path(self, pos_x, pos_y):
-        return self.matrix[pos_y, pos_x] == PATH_MAPPING
-
-    def is_reward(self, pos_x, pos_y):
-        return self.matrix[pos_y, pos_x] == REWARD_MAPPING
-
-    def _within_x_range(self, x):
-        return 0 <= x < self.max_x
-
-    def _within_y_range(self, y):
-        return 0 <= y < self.max_y
-
-    @staticmethod
-    def moved_north(start, destination) -> bool:
-        """
-        :param start: start (X, Y) coordinates tuple
-        :param destination: destination (X, Y) coordinates tuple
-        :return: true if it was north move
-        """
-        return destination[1] + 1 == start[1]
-
-    @staticmethod
-    def moved_east(start, destination) -> bool:
-        """
-        :param start: start (X, Y) coordinates tuple
-        :param destination: destination (X, Y) coordinates tuple
-        :return: true if it was east move
-        """
-        return destination[0] - 1 == start[0]
-
-    @staticmethod
-    def moved_south(start, destination) -> bool:
-        """
-        :param start: start (X, Y) coordinates tuple
-        :param destination: destination (X, Y) coordinates tuple
-        :return: true if it was south move
-        """
-        return destination[1] - 1 == start[1]
-
-    @staticmethod
-    def moved_west(start, destination) -> bool:
-        """
-        :param start: start (X, Y) coordinates tuple
-        :param destination: destination (X, Y) coordinates tuple
-        :return: true if it was west move
-        """
-        return destination[0] + 1 == start[0]
-
-    @staticmethod
-    def distinguish_direction(start, end):
-        direction = ''
-
-        if Maze.moved_north(start, end):
-            direction += 'N'
-
-        if Maze.moved_south(start, end):
-            direction += 'S'
-
-        if Maze.moved_west(start, end):
-            direction += 'W'
-
-        if Maze.moved_east(start, end):
-            direction += 'E'
-
-        return direction
-
-    @staticmethod
-    def get_possible_neighbour_cords(pos_x, pos_y) -> tuple:
-        """
-        Returns a tuple with coordinates for
-        N, NE, E, SE, S, SW, W, NW neighbouring cells.
-        """
-        n = (pos_x, pos_y - 1)
-        ne = (pos_x + 1, pos_y - 1)
-        e = (pos_x + 1, pos_y)
-        se = (pos_x + 1, pos_y + 1)
-        s = (pos_x, pos_y + 1)
-        sw = (pos_x - 1, pos_y + 1)
-        w = (pos_x - 1, pos_y)
-        nw = (pos_x - 1, pos_y - 1)
-
-        return n, ne, e, se, s, sw, w, nw
-
-    def get_goal_state(self, current_x, current_y):
-        """
-        Goal generator function used in Action Planning.
-        :param current_x:
-        :param current_y:
-        :return:
-            perception of a goal state
-        """
-        if str(REWARD_MAPPING) in self.perception(current_x, current_y):
-            return self.perception(self._goal_x, self._goal_y)
-
-        elif current_x == self._goal_x and current_y == self._goal_y:
-            return None
-
-        else:
-            pos_x, pos_y = random.choice(self.get_possible_neighbour_cords(
-                self._goal_x, self._goal_y))
-            while not self.is_path(pos_x, pos_y):
-                pos_x, pos_y = random.choice(self.get_possible_neighbour_cords(
-                    self._goal_x, self._goal_y))
-            return self.perception(pos_x, pos_y)
-
-    def _get_reward_state(self):
-        """
-        Returns x, y for reward state.
-        :return:
-            x, y - reward state coordinates
-        """
-        for i in range(0, self.max_x):
-            for j in range(0, self.max_y):
-                if self.is_reward(i, j):
-                    return i, j
+    def get_goal_state(self):
+        return self.maze.get_goal_state()

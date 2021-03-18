@@ -6,7 +6,7 @@ import gym
 import numpy as np
 from gym import spaces, utils
 
-from gym_maze import ACTION_LOOKUP, find_action_by_direction
+from gym_maze.internal.maze_impl import ACTION_LOOKUP, find_action_by_direction
 from gym_woods.woods import Woods
 
 

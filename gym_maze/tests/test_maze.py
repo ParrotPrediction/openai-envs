@@ -1,47 +1,30 @@
 import gym
 import pytest
-# noinspection PyUnresolvedReferences
+
 import gym_maze  # noqa: F401
 
 
 class TestMaze:
-    @pytest.mark.parametrize("_env_name, _x, _y", [
-        ('Maze4-v0', 6, 1),
-        ('Maze5-v0', 7, 1),
-        ('Maze6-v0', 7, 1),
-        ('MazeF1-v0', 2, 1)
+    @pytest.mark.parametrize("_env_name, _goal", [
+        ('Maze4-v0', (1, 6)),
+        ('Maze5-v0', (1, 7)),
+        ('Maze6-v0', (1, 7)),
+        ('MazeF1-v0', (1, 2))
     ])
-    def test_should_return_reward_state(self, _env_name, _x, _y):
-        # given
+    def test_should_return_reward_state(self, _env_name, _goal):
         maze = gym.make(_env_name)
+        assert maze.env.maze._goal == _goal
 
-        # when
-        x = maze.env.maze._goal_x
-        y = maze.env.maze._goal_y
-
-        # then
-        assert x == _x
-        assert y == _y
-
-    @pytest.mark.parametrize("_env_name, _current_x, _current_y, _goal_state",
-                             [
-                                 ('Maze4-v0', 6, 1, None),
-                                 ('Maze4-v0', 5, 1, tuple('11110001')),
-                                 ('Maze4-v0', 5, 2, tuple('11110001')),
-                                 ('Maze4-v0', 6, 2, tuple('11110001')),
-                                 ('Maze5-v0', 7, 1, None),
-                                 ('Maze5-v0', 6, 1, tuple('11110101')),
-                                 ('Maze5-v0', 7, 2, tuple('11110101')),
-                                 ('MazeF1-v0', 2, 1, None),
-                                 ('MazeF1-v0', 1, 1, tuple('11111001'))
-                             ])
-    def test_should_return_goal_state(self, _env_name, _current_x, _current_y,
-                                      _goal_state):
-        # given
+    @pytest.mark.parametrize("_env_name, _xy, _goal_state", [
+        ('Maze4-v0', (1, 5), list('11110001')),
+        ('Maze4-v0', (2, 5), list('11110001')),
+        ('Maze4-v0', (2, 6), list('11110001')),
+        ('Maze5-v0', (1, 6), list('11110101')),
+        ('Maze5-v0', (2, 7), list('11110101')),
+        ('MazeF1-v0', (1, 1), list('11111001'))
+    ])
+    def test_should_return_goal_state(self, _env_name, _xy, _goal_state):
         maze = gym.make(_env_name)
+        maze.env.maze.insert_agent(_xy)
 
-        # when
-        goal_state = maze.env.maze.get_goal_state(_current_x, _current_y)
-
-        # then
-        assert goal_state == _goal_state
+        assert maze.env.maze.get_goal_state() == _goal_state

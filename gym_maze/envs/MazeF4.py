@@ -1,9 +1,9 @@
-from gym_maze.envs import AbstractMaze
+from gym_maze import Maze
 
 import numpy as np
 
 
-class MazeF4(AbstractMaze):
+class MazeF4(Maze):
     def __init__(self):
         super().__init__(np.asarray([
             [1, 1, 1, 1, 1, 1, 1],

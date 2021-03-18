@@ -1,0 +1,2 @@
+class TestAbstractMaze:
+    pass

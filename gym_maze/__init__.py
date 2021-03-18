@@ -1,26 +1,9 @@
 from gym.envs.registration import register
 
-# noinspection PyUnresolvedReferences
-from .maze import Maze  # noqa: F401
-from .maze import PATH_MAPPING, WALL_MAPPING, REWARD_MAPPING  # noqa: F401
-
-ACTION_LOOKUP = {
-    0: 'N',
-    1: 'NE',
-    2: 'E',
-    3: 'SE',
-    4: 'S',
-    5: 'SW',
-    6: 'W',
-    7: 'NW'
-}
-
-
-def find_action_by_direction(direction):
-    for key, val in ACTION_LOOKUP.items():
-        if val == direction:
-            return key
-
+from gym_maze.common import MAZE_PATH as PATH_MAPPING  # noqa: F401
+from gym_maze.common import MAZE_REWARD as REWARD_MAPPING  # noqa: F401
+from gym_maze.common import MAZE_WALL as WALL_MAPPING  # noqa: F401
+from gym_maze.maze import Maze  # noqa: F401
 
 register(
     id='MazeF1-v0',
