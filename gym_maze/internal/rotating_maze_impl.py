@@ -8,7 +8,6 @@ class RotatingMazeImpl(AbstractMaze):
     """
     Instead of keeping agent direction the matrix environment is rotated
     """
-
     def __init__(self, matrix: np.ndarray):
         super().__init__(matrix)
         self.found_reward = False

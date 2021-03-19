@@ -5,7 +5,7 @@ import numpy as np
 
 from gym_maze.common import MAZE_PATH, MAZE_ANIMAT, MAZE_WALL
 from gym_maze.common.maze_utils import get_possible_insertion_coordinates, \
-    get_animat_xy, adjacent_cells
+    get_animat_xy, adjacent_cell_values
 
 
 class AbstractMaze:
@@ -23,7 +23,7 @@ class AbstractMaze:
         if cords is None:
             cords = self.agent_position
 
-        return list(map(str, adjacent_cells(self.matrix, *cords)))
+        return list(map(str, adjacent_cell_values(self.matrix, *cords)))
 
     def insert_agent(self, cords: Tuple[int, int] = None) -> None:
         if cords is not None:

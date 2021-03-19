@@ -29,56 +29,52 @@ class MazeImpl(AbstractMaze):
 
     def __init__(self, matrix: np.ndarray):
         super().__init__(matrix)
-        self.x = None  # TODO remove this
-        self.y = None
+        self.found_reward = False
         self._goal = get_reward_xy(matrix)
 
-    def move(self, action: int):
+    def is_done(self) -> bool:
+        return self.found_reward
+
+    def move(self, action: int) -> None:
         perception = self.perception()
+        x, y = self.agent_position
+        next_state = None
 
         def _can_move(el: str):
             return el != str(MAZE_WALL)
 
-        animat_moved = False
         action_type = ACTION_LOOKUP[action]
 
         if action_type == "N" and _can_move(perception[0]):
-            self.y -= 1
-            animat_moved = True
+            next_state = (x-1, y)
 
         if action_type == 'NE' and _can_move(perception[1]):
-            self.x += 1
-            self.y -= 1
-            animat_moved = True
+            next_state = (x-1, y+1)
 
         if action_type == "E" and _can_move(perception[2]):
-            self.x += 1
-            animat_moved = True
+            next_state = (x, y+1)
 
         if action_type == 'SE' and _can_move(perception[3]):
-            self.x += 1
-            self.y += 1
-            animat_moved = True
+            next_state = (x+1, y+1)
 
         if action_type == "S" and _can_move(perception[4]):
-            self.y += 1
-            animat_moved = True
+            next_state = (x+1, y)
 
         if action_type == 'SW' and _can_move(perception[5]):
-            self.x -= 1
-            self.y += 1
-            animat_moved = True
+            next_state = (x+1, y-1)
 
         if action_type == "W" and _can_move(perception[6]):
-            self.x -= 1
-            animat_moved = True
+            next_state = (x, y-1)
 
         if action_type == 'NW' and _can_move(perception[7]):
-            self.x -= 1
-            self.y -= 1
-            animat_moved = True
+            next_state = (x-1, y-1)
 
-        return animat_moved
+        if next_state:
+            if self.matrix[next_state] == MAZE_REWARD:
+                self.found_reward = True
+            else:
+                self.matrix[x, y] = MAZE_PATH
+                self.matrix[next_state] = MAZE_ANIMAT
 
     def get_goal_state(self):
         """

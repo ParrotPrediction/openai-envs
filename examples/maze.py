@@ -1,4 +1,5 @@
 import logging
+from gym_maze.internal.maze_impl import ACTION_LOOKUP
 
 import gym
 import gym_maze  # noqa: F401
@@ -18,11 +19,13 @@ if __name__ == '__main__':
 
             action = maze.action_space.sample()
 
-            logging.info("\t\tExecuted action: [{}]".format(action))
+            logging.info("\t\tExecuted action: [{}]"
+                         .format(ACTION_LOOKUP[action]))
+
             observation, reward, done, info = maze.step(action)
 
             if done:
-                logging.info(f"Episode finished after {t+1} timesteps.")
+                logging.info(f"Episode finished after {t+1} steps.")
                 logging.info(f"Last reward: {reward}")
                 break
 

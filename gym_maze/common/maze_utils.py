@@ -28,26 +28,26 @@ def get_reward_xy(matrix: np.ndarray) -> Tuple[int, int]:
     return tuple(rewards[0])
 
 
-def adjacent_cells(matrix, x, y) -> Tuple:
+def adjacent_cell_values(matrix, x, y) -> Tuple:
     max_x, max_y = matrix.shape
 
     assert 0 <= x < max_x
     assert 0 <= y < max_y
 
     # Position N
-    if y == 0:
+    if x == 0:
         n = None
     else:
         n = matrix[x - 1, y]
 
     # Position NE
-    if x == max_x - 1 or y == 0:
+    if x == 0 or y == max_y - 1:
         ne = None
     else:
         ne = matrix[x - 1, y + 1]
 
     # Position E
-    if x == max_x - 1:
+    if y == max_y - 1:
         e = None
     else:
         e = matrix[x, y + 1]
@@ -59,19 +59,19 @@ def adjacent_cells(matrix, x, y) -> Tuple:
         se = matrix[x + 1, y + 1]
 
     # Position S
-    if y == (max_y - 1):
+    if x == max_x - 1:
         s = None
     else:
         s = matrix[x + 1, y]
 
     # Position SW
-    if x == 0 or y == max_y - 1:
+    if x == max_x - 1 or y == 0:
         sw = None
     else:
         sw = matrix[x + 1, y - 1]
 
     # Position W
-    if x == 0:
+    if y == 0:
         w = None
     else:
         w = matrix[x, y - 1]
