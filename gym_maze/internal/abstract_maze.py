@@ -3,7 +3,7 @@ from typing import Tuple, List
 
 import numpy as np
 
-from gym_maze.common import MAZE_PATH, MAZE_ANIMAT, MAZE_WALL, MAZE_REWARD
+from gym_maze.common import MAZE_PATH, MAZE_ANIMAT, MAZE_WALL
 from gym_maze.common.maze_utils import get_possible_insertion_coordinates, \
     get_animat_xy, adjacent_cells
 

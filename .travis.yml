@@ -4,8 +4,7 @@ python:
 install:
 - pip install -e ".[testing]"
 script:
-- flake8
-- python setup.py test
+- make test
 deploy:
   skip_cleanup: true
   provider: pypi

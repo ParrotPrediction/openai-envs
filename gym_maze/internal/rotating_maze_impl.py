@@ -1,5 +1,3 @@
-from typing import Tuple
-
 import numpy as np
 
 from gym_maze.common import MAZE_WALL, MAZE_PATH, MAZE_ANIMAT, MAZE_REWARD

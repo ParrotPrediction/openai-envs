@@ -95,7 +95,10 @@ class MazeImpl(AbstractMaze):
         elif self.agent_position == self._goal:
             return None
         else:
-            pos_x, pos_y = random.choice(get_possible_neighbour_cords(*self._goal))
+            ncords = get_possible_neighbour_cords(*self._goal)
+            pos_x, pos_y = random.choice(ncords)
+
             while not self.is_path((pos_x, pos_y)):
-                pos_x, pos_y = random.choice(get_possible_neighbour_cords(*self._goal))
+                pos_x, pos_y = random.choice(ncords)
+
             return adjust(self.perception((pos_x, pos_y)))

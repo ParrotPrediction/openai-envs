@@ -101,4 +101,3 @@ class TestAbstractRotatingMazeImpl:
 
         # then
         assert maze.is_done() is True
-

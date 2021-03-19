@@ -21,4 +21,3 @@ class RotatingMaze(gym.Env):
 
     def render(self, mode='human'):
         pass
-
