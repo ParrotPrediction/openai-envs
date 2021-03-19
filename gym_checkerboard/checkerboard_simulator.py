@@ -17,7 +17,7 @@ class CheckerboardSimulator:
         self.board = self._build_board()
 
     def _build_board(self) -> np.ndarray:
-        x = np.empty(pow(self.nd, self.n), dtype=np.bool)
+        x = np.empty(pow(self.nd, self.n), dtype=bool)
 
         # alternating cell colors
         x[:] = WHITE

@@ -1,6 +1,6 @@
 from gym.envs.registration import register
 
-from .fsw import FiniteStateWorld
+from .fsw import FiniteStateWorld  # noqa: F401
 
 register(
     id='fsw-5-v0',

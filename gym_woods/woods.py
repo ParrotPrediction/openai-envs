@@ -11,7 +11,7 @@ class Woods:
         # Because some boards might be toroidal (no boundaries) they will be
         # duplicated into 3x3 grid with the original being in center
         self.big_board = np.empty(
-            (self.max_y * 3, self.max_x * 3), dtype=np.str)
+            (self.max_y * 3, self.max_x * 3), dtype=str)
 
         # place each original row in big_board
         for row_idx in range(0, self.max_y):

@@ -26,7 +26,11 @@ class SimpleMaze(gym.Env):
         4: [ActionState(Action.SOUTH, 7)],
         5: [ActionState(Action.NORTH, 2), ActionState(Action.SOUTH, 8)],
         6: [],
-        7: [ActionState(Action.NORTH, 4), ActionState(Action.EAST, 8), ActionState(Action.WEST, 6)],
+        7: [
+            ActionState(Action.NORTH, 4),
+            ActionState(Action.EAST, 8),
+            ActionState(Action.WEST, 6)
+        ],
         8: [ActionState(Action.NORTH, 5), ActionState(Action.WEST, 7)]
     }
     # Wall 1, Path 0

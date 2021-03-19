@@ -1,7 +1,6 @@
 import gym
 import pytest
 
-# noinspection PyUnresolvedReferences
 import gym_woods  # noqa: F401
 
 

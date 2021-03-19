@@ -98,17 +98,17 @@ class Grid(gym.Env):
         Return states and possible actions in each of them
         """
 
-        # Assign all actions for all states
-        mapping = {}
+        # Assign all actions for all states (mapping)
+        m = {}
         for x in range(1, self._size + 1):
             for y in range(1, self._size + 1):
-                mapping[(x, y)] = [MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN]
+                m[(x, y)] = [MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN]
 
         # Remove actions from certain states
-        top_row = dict(filter(lambda i: i[0][0] == self._size, mapping.items()))
-        bottom_row = dict(filter(lambda i: i[0][0] == 1, mapping.items()))
-        left_col = dict(filter(lambda i: i[0][1] == 1, mapping.items()))
-        right_col = dict(filter(lambda i: i[0][1] == self._size, mapping.items()))
+        top_row = dict(filter(lambda i: i[0][0] == self._size, m.items()))
+        bottom_row = dict(filter(lambda i: i[0][0] == 1, m.items()))
+        left_col = dict(filter(lambda i: i[0][1] == 1, m.items()))
+        right_col = dict(filter(lambda i: i[0][1] == self._size, m.items()))
 
         for actions in top_row.values():
             actions.remove(MOVE_UP)
@@ -123,9 +123,9 @@ class Grid(gym.Env):
             actions.remove(MOVE_RIGHT)
 
         # No actions possible when found reward
-        mapping[(self._size, self._size)] = []
+        m[(self._size, self._size)] = []
 
         # Cast (int, int) key to (str, str)
-        mapping = {(str(k[0]), str(k[1])): v for k, v in mapping.items()}
+        m = {(str(k[0]), str(k[1])): v for k, v in m.items()}
 
-        return mapping
+        return m
