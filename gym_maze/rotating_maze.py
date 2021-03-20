@@ -2,6 +2,8 @@ import io
 import logging
 import sys
 
+import numpy as np
+
 import gym
 from gym import spaces
 
@@ -14,13 +16,14 @@ class RotatingMaze(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
 
     def __init__(self, matrix):
-        self.maze = RotatingMazeImpl(matrix)
-
+        self.matrix = np.copy(matrix)
+        self.maze = RotatingMazeImpl(np.copy(self.matrix))
         self.action_space = spaces.Discrete(3)
         self.observation_space = MazeObservationSpace(8)
 
     def reset(self):
         logging.debug("Resetting the environment")
+        self.maze = RotatingMazeImpl(np.copy(self.matrix))
         self.maze.insert_agent()
         return self._observe()
 

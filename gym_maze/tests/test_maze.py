@@ -1,7 +1,9 @@
 import gym
+import numpy as np
 import pytest
 
 import gym_maze  # noqa: F401
+from gym_maze.common import MAZE_ANIMAT
 
 
 class TestMaze:
@@ -28,3 +30,17 @@ class TestMaze:
         maze.env.maze.insert_agent(_xy)
 
         assert maze.env.maze.get_goal_state() == _goal_state
+
+    def test_should_reset_the_environment(self):
+        # given
+        env = gym.make('Maze4-v0')
+
+        assert env.env.maze.matrix is not None
+        assert np.sum(np.where(env.env.maze.matrix == MAZE_ANIMAT, 1, 0)) == 0
+
+        # when & then
+        env.reset()
+        assert np.sum(np.where(env.env.maze.matrix == MAZE_ANIMAT, 1, 0)) == 1
+
+        env.reset()
+        assert np.sum(np.where(env.env.maze.matrix == MAZE_ANIMAT, 1, 0)) == 1

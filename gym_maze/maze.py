@@ -3,6 +3,7 @@ import logging
 import sys
 
 import gym
+import numpy as np
 from gym import spaces
 
 from gym_maze.common.maze_observation_space import MazeObservationSpace
@@ -15,19 +16,21 @@ class Maze(gym.Env):
     metadata = {'render.modes': ['human', 'ansi']}
 
     def __init__(self, matrix):
-        self.maze = MazeImpl(matrix)
+        self.matrix = np.copy(matrix)
+        self.maze = MazeImpl(np.copy(matrix))
 
         self.action_space = spaces.Discrete(8)
         self.observation_space = MazeObservationSpace(8)
 
+    def reset(self):
+        logging.debug("Resetting the environment")
+        self.maze = MazeImpl(np.copy(self.matrix))
+        self.maze.insert_agent()
+        return self._observe()
+
     def step(self, action: int):
         self.maze.move(action)
         return self._observe(), self._get_reward(), self._is_over(), {}
-
-    def reset(self):
-        logging.debug("Resetting the environment")
-        self.maze.insert_agent()
-        return self._observe()
 
     def render(self, mode='human'):
         if mode == 'human':
