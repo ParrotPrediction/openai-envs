@@ -10,6 +10,7 @@ from gym import spaces
 from gym_maze.common.maze_observation_space import MazeObservationSpace
 from gym_maze.common.maze_renderer import render
 from gym_maze.internal.rotating_maze_impl import RotatingMazeImpl
+from gym_maze.utils.rotating_utils import get_all_transitions
 
 
 class RotatingMaze(gym.Env):
@@ -58,3 +59,7 @@ class RotatingMaze(gym.Env):
 
     def _is_over(self):
         return self.maze.is_done()
+
+    def get_all_possible_transitions(self):
+        """Debugging only"""
+        return get_all_transitions(self.matrix)
