@@ -41,15 +41,17 @@ class TestRotatingMaze:
         assert np.sum(np.where(env.env.maze.matrix == MAZE_ANIMAT, 1, 0)) == 1
 
     @pytest.mark.parametrize("_env_name, _count", [
-        ('Maze228-v0', 228)
+        ('Maze228-v0', 228),
+        ('Maze252-v0', 252),
+        ('Maze288-v0', 288),
+        ('Maze324-v0', 324),
     ])
     def test_should_calculate_transitions(self, _env_name, _count):
         # given
         env = gym.make(_env_name)
 
         # when
-        transitions = env.env.get_all_possible_transitions()
+        transitions = env.env.transitions
 
         # then
         assert len(transitions) == _count
-

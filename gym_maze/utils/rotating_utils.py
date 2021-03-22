@@ -1,5 +1,5 @@
-from typing import List, Tuple, Generator, Set
 from itertools import chain
+from typing import List, Tuple, Generator
 
 import numpy as np
 
@@ -41,7 +41,7 @@ def _get_step_transitions(matrix: np.ndarray) -> Generator:
 
         next_cell = (path_cell[0] - 1, path_cell[1])
         if matrix[next_cell] != MAZE_WALL:
-            p1 = np.array(adjacent_cell_values(matrix, *next_cell), dtype=np.uint8)
+            p1 = np.array(adjacent_cell_values(matrix, *next_cell))
             yield p0, 0, p1
         else:
             yield p0, 0, p0

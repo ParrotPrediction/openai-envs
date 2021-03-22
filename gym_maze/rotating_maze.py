@@ -2,9 +2,8 @@ import io
 import logging
 import sys
 
-import numpy as np
-
 import gym
+import numpy as np
 from gym import spaces
 
 from gym_maze.common.maze_observation_space import MazeObservationSpace
@@ -19,8 +18,11 @@ class RotatingMaze(gym.Env):
     def __init__(self, matrix):
         self.matrix = np.copy(matrix)
         self.maze = RotatingMazeImpl(np.copy(self.matrix))
+
         self.action_space = spaces.Discrete(3)
         self.observation_space = MazeObservationSpace(8)
+
+        self.transitions = get_all_transitions(self.matrix)
 
     def reset(self):
         logging.debug("Resetting the environment")
@@ -59,7 +61,3 @@ class RotatingMaze(gym.Env):
 
     def _is_over(self):
         return self.maze.is_done()
-
-    def get_all_possible_transitions(self):
-        """Debugging only"""
-        return get_all_transitions(self.matrix)
