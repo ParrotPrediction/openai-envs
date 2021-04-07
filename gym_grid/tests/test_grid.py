@@ -4,7 +4,6 @@ import sys
 import gym
 import numpy as np
 
-# noinspection PyUnresolvedReferences
 import gym_grid  # noqa: F401
 from gym_grid.grid import MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN
 
@@ -28,27 +27,27 @@ class TestGrid:
 
         # handle hitting upper bound
         np.random.seed(42)
-        grid.reset()  # (x=7, y=20)
+        grid.reset()  # (x=6, y=19)
         state, _, _, _ = grid.step(MOVE_UP)
-        assert state == ("7", "20")
+        assert state == ("6", "19")
 
         # handle hitting right bound
         np.random.seed(27)
-        grid.reset()  # (x=20, y=9)
+        grid.reset()  # (x=19, y=8)
         state, _, _, _ = grid.step(MOVE_RIGHT)
-        assert state == ("20", "9")
+        assert state == ("19", "8")
 
         # handle hitting lower bound
         np.random.seed(50)
-        grid.reset()  # (x=17, y=1)
+        grid.reset()  # (x=16, y=0)
         state, _, _, _ = grid.step(MOVE_DOWN)
-        assert state == ("17", "1")
+        assert state == ("16", "0")
 
         # handle hitting left bound
         np.random.seed(48)
-        grid.reset()  # (x=1, y=20)
+        grid.reset()  # (x=0, y=19)
         state, _, _, _ = grid.step(MOVE_LEFT)
-        assert state == ("1", "20")
+        assert state == ("0", "19")
 
     def test_should_get_reward(self):
         # given
@@ -58,13 +57,13 @@ class TestGrid:
 
         # when
         grid.reset()
-        for _ in range(0, 20):
+        for _ in range(20):
             grid.step(MOVE_RIGHT)
         while not reward == 1000:
             obs, reward, done, _ = grid.step(MOVE_UP)
 
         # then
-        assert obs == ('20', '20')
+        assert obs == ('19', '19')
         assert reward == 1000
         assert done is True
 
@@ -72,20 +71,20 @@ class TestGrid:
         # given
         grid = gym.make('grid-20-v0')
         np.random.seed(54)
-        grid.reset()  # (16, 6)
+        grid.reset()  # (15, 5)
 
         # when & then
         state, _, _, _ = grid.step(MOVE_LEFT)
-        assert state == ("15", "6")
+        assert state == ("14", "5")
 
         state, _, _, _ = grid.step(MOVE_UP)
-        assert state == ("15", "7")
+        assert state == ("14", "6")
 
         state, _, _, _ = grid.step(MOVE_RIGHT)
-        assert state == ("16", "7")
+        assert state == ("15", "6")
 
         state, _, _, _ = grid.step(MOVE_DOWN)
-        assert state == ("16", "6")
+        assert state == ("15", "5")
 
     def test_should_reach_reward(self):
         # given
@@ -93,27 +92,37 @@ class TestGrid:
 
         # from left
         np.random.seed(128)
-        grid.reset()  # (19, 20)
+        grid.reset()  # (18, 19)
         state, reward, done, _ = grid.step(MOVE_RIGHT)
-        assert state == ("20", "20")
+        assert state == ("19", "19")
         assert reward == 1000
         assert done is True
 
         # from bottom
         np.random.seed(342)
-        grid.reset()  # (20, 19)
+        grid.reset()  # (19, 18)
         state, reward, done, _ = grid.step(MOVE_UP)
-        assert state == ("20", "20")
+        assert state == ("19", "19")
         assert reward == 1000
         assert done is True
 
     def test_should_get_all_states_and_actions(self):
         # given
         grid = gym.make('grid-5-v0')
-        grid.reset()
 
         # when
         mapping = grid.env._state_action()
 
         # then
         assert len(mapping) == 25
+
+    def test_should_get_all_transitions(self):
+        # given
+        grid = gym.make('grid-5-v0')
+        grid.reset()
+
+        # when
+        transitions = grid.env.get_transitions()
+
+        # then
+        assert len(transitions) == 78

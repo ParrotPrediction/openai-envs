@@ -1,3 +1,5 @@
+from typing import Tuple, List
+
 import numpy as np
 
 from gym_maze.common import MAZE_WALL, MAZE_PATH, MAZE_ANIMAT, MAZE_REWARD
@@ -12,6 +14,11 @@ class RotatingMazeImpl(AbstractMaze):
         super().__init__(matrix)
         self.found_reward = False
 
+    def perception(self, cords: Tuple[int, int] = None) -> List:
+        cells = super().perception(cords)
+        last_bit = str(MAZE_REWARD) if self.found_reward else str(MAZE_PATH)
+        return cells + [last_bit]
+
     def turn_left(self) -> None:
         self.matrix = np.rot90(self.matrix, k=3)
 
@@ -25,7 +32,9 @@ class RotatingMazeImpl(AbstractMaze):
         assert self.found_reward is False
 
         if self.matrix[next_state] == MAZE_REWARD:
-            # found reward
+            # found reward and step on it
+            self.matrix[x, y] = MAZE_PATH
+            self.matrix[next_state] = MAZE_ANIMAT
             self.found_reward = True
         elif self.matrix[next_state] != MAZE_WALL:
             # perform step ahead

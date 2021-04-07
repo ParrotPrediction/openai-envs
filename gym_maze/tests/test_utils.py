@@ -8,7 +8,7 @@ class TestUtils:
         maze = gym.make("Maze4-v0")
 
         # when
-        transitions = maze.env.get_all_possible_transitions()
+        transitions = maze.env.get_transitions()
 
         # then
         assert len(transitions) == 115

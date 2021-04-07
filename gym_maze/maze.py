@@ -21,6 +21,7 @@ class Maze(gym.Env):
 
         self.action_space = spaces.Discrete(8)
         self.observation_space = MazeObservationSpace(8)
+        self._transitions = self._calculate_transitions()
 
     def reset(self):
         logging.debug("Resetting the environment")
@@ -54,9 +55,11 @@ class Maze(gym.Env):
     def _is_over(self):
         return self.maze.is_done()
 
-    def get_all_possible_transitions(self):
-        """Debugging only"""
-        return get_all_possible_transitions(self)
+    def get_transitions(self):
+        return self._transitions
 
     def get_goal_state(self):
         return self.maze.get_goal_state()
+
+    def _calculate_transitions(self):
+        return get_all_possible_transitions(self)

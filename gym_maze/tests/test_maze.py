@@ -44,3 +44,12 @@ class TestMaze:
 
         env.reset()
         assert np.sum(np.where(env.env.maze.matrix == MAZE_ANIMAT, 1, 0)) == 1
+
+    @pytest.mark.skip(reason="include wall movements in transitions")
+    @pytest.mark.parametrize("_env_name, _c", [
+        ('Maze4-v0', 208),
+        ('Maze6-v0', 288),
+    ])
+    def test_should_calculate_number_of_transitions(self, _env_name, _c):
+        env = gym.make(_env_name)
+        assert len(env.env.get_transitions()) == _c

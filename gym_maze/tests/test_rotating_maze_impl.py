@@ -29,8 +29,8 @@ class TestAbstractRotatingMazeImpl:
         assert maze.matrix[agent_xy[0], agent_xy[1]] == MAZE_ANIMAT
 
     @pytest.mark.parametrize('_xy, _p', [
-        ((1, 2), list('11000011')),
-        ((3, 3), list('01111190')),
+        ((1, 2), list('110000110')),
+        ((3, 3), list('011111900')),
     ])
     def test_should_get_perception(self, _xy, _p, maze):
         maze.insert_agent(_xy)
@@ -39,18 +39,18 @@ class TestAbstractRotatingMazeImpl:
     def test_agent_should_turn_left(self, maze):
         # given
         maze.insert_agent((1, 2))
-        init_obs = list('11000011')
+        init_obs = list('110000110')
         assert maze.perception() == init_obs
 
         # when & then
         maze.turn_left()
-        assert maze.perception() == list('11110000')
+        assert maze.perception() == list('111100000')
 
         maze.turn_left()
-        assert maze.perception() == list('00111100')
+        assert maze.perception() == list('001111000')
 
         maze.turn_left()
-        assert maze.perception() == list('00001111')
+        assert maze.perception() == list('000011110')
 
         maze.turn_left()
         assert maze.perception() == init_obs
@@ -58,18 +58,18 @@ class TestAbstractRotatingMazeImpl:
     def test_agent_should_turn_right(self, maze):
         # given
         maze.insert_agent((3, 1))
-        init_obs = list('00911111')
+        init_obs = list('009111110')
         assert maze.perception() == init_obs
 
         # when & then
         maze.turn_right()
-        assert maze.perception() == list('91111100')
+        assert maze.perception() == list('911111000')
 
         maze.turn_right()
-        assert maze.perception() == list('11110091')
+        assert maze.perception() == list('111100910')
 
         maze.turn_right()
-        assert maze.perception() == list('11009111')
+        assert maze.perception() == list('110091110')
 
         maze.turn_right()
         assert maze.perception() == init_obs
@@ -77,15 +77,15 @@ class TestAbstractRotatingMazeImpl:
     def test_should_step_ahead(self, maze):
         # given
         maze.insert_agent((3, 1))
-        assert maze.perception() == list('00911111')
+        assert maze.perception() == list('009111110')
 
         # when stepping into path
         maze.step_ahead()
-        assert maze.perception() == list('10090111')
+        assert maze.perception() == list('100901110')
 
         # when stepping into wall
         maze.step_ahead()
-        assert maze.perception() == list('10090111')
+        assert maze.perception() == list('100901110')
 
     def test_should_get_reward(self, maze):
         # given
@@ -101,3 +101,42 @@ class TestAbstractRotatingMazeImpl:
 
         # then
         assert maze.is_done() is True
+
+    def test_should_get_correct_perceptions(self, maze):
+        # given
+        maze.insert_agent((3, 1))
+        assert maze.perception() == list('009111110')
+
+        # when & then
+        maze.turn_left()
+        assert maze.perception() == list('110091110')
+
+        maze.turn_right()
+        assert maze.perception() == list('009111110')
+
+        maze.step_ahead()
+        assert maze.perception() == list('100901110')
+
+        maze.turn_right()
+        assert maze.perception() == list('090111100')
+
+        maze.step_ahead()
+        assert maze.perception() == list('009001000')
+
+    def test_should_remain_in_position_when_hitting_wall(self, maze):
+        # given
+        maze.insert_agent((3, 1))
+        assert maze.perception() == list('009111110')
+
+        # when
+        maze.turn_right()
+        maze.turn_right()
+        assert maze.perception() == list('111100910')
+
+        maze.step_ahead()
+        assert maze.perception() == list('111100910')
+
+        maze.turn_left()
+        maze.step_ahead()
+        assert maze.found_reward
+        assert maze.perception() == list('011100009')
