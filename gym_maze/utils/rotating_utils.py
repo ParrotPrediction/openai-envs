@@ -37,11 +37,13 @@ def get_all_transitions(matrix: np.ndarray) -> List[Tuple[List, int, List]]:
 
 def _get_step_transitions(matrix: np.ndarray) -> Generator:
     for path_cell in zip(*np.where(matrix == MAZE_PATH)):
-        p0 = np.array(adjacent_cell_values(matrix, *path_cell), dtype=np.uint8)
+
+        point = [matrix[path_cell]]
+        p0 = np.array(list(adjacent_cell_values(matrix, *path_cell)) + point)
 
         next_cell = (path_cell[0] - 1, path_cell[1])
         if matrix[next_cell] != MAZE_WALL:
-            p1 = np.array(adjacent_cell_values(matrix, *next_cell))
+            p1 = np.array(list(adjacent_cell_values(matrix, *next_cell)) + [matrix[next_cell]])
             yield p0, 0, p1
         else:
             yield p0, 0, p0
@@ -49,7 +51,11 @@ def _get_step_transitions(matrix: np.ndarray) -> Generator:
 
 def _get_rotation_transitions(matrix: np.ndarray) -> Generator:
     for path_cell in zip(*np.where(matrix == MAZE_PATH)):
-        p0 = np.array(adjacent_cell_values(matrix, *path_cell), dtype=np.uint8)
+        adj = list(adjacent_cell_values(matrix, *path_cell))
 
-        yield p0, 1, np.roll(p0, 2)  # perception of turning left
-        yield p0, 2, np.roll(p0, -2)  # perception of turning right
+        point = [matrix[path_cell]]
+
+        p0 = np.array(adj + point, dtype=np.uint8)
+
+        yield p0, 1, np.append(np.roll(adj, 2), point)  # perception of turning left
+        yield p0, 2, np.append(np.roll(adj, -2), point)  # perception of turning right
