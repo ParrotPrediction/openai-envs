@@ -58,3 +58,24 @@ register(
     max_episode_steps=max_episode_steps,
     kwargs={'control_bits': 2}
 )
+
+register(
+    id='{}-11bit-v0'.format(real_mpx_name),
+    entry_point='gym_multiplexer:RealMultiplexer',
+    max_episode_steps=max_episode_steps,
+    kwargs={'control_bits': 3}
+)
+
+register(
+    id='{}-20bit-v0'.format(real_mpx_name),
+    entry_point='gym_multiplexer:RealMultiplexer',
+    max_episode_steps=max_episode_steps,
+    kwargs={'control_bits': 4}
+)
+
+register(
+    id='{}-37bit-v0'.format(real_mpx_name),
+    entry_point='gym_multiplexer:RealMultiplexer',
+    max_episode_steps=max_episode_steps,
+    kwargs={'control_bits': 5}
+)
