@@ -35,11 +35,14 @@ class RotatingMazeImpl(AbstractMaze):
             # found reward and step on it
             self.matrix[x, y] = MAZE_PATH
             self.matrix[next_state] = MAZE_ANIMAT
+
             self.found_reward = True
+
         elif self.matrix[next_state] != MAZE_WALL:
             # perform step ahead
             self.matrix[x, y] = MAZE_PATH
             self.matrix[next_state] = MAZE_ANIMAT
+
         else:
             # wall - do nothing
             assert self.matrix[next_state] == MAZE_WALL
