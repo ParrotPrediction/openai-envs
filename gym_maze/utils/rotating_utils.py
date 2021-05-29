@@ -43,7 +43,8 @@ def _get_step_transitions(matrix: np.ndarray) -> Generator:
 
         next_cell = (path_cell[0] - 1, path_cell[1])
         if matrix[next_cell] != MAZE_WALL:
-            p1 = np.array(list(adjacent_cell_values(matrix, *next_cell)) + [matrix[next_cell]])
+            p1 = np.array(list(adjacent_cell_values(matrix, *next_cell)) +
+                          [matrix[next_cell]])
             yield p0, 0, p1
         else:
             yield p0, 0, p0
@@ -57,5 +58,7 @@ def _get_rotation_transitions(matrix: np.ndarray) -> Generator:
 
         p0 = np.array(adj + point, dtype=np.uint8)
 
-        yield p0, 1, np.append(np.roll(adj, 2), point)  # perception of turning left
-        yield p0, 2, np.append(np.roll(adj, -2), point)  # perception of turning right
+        # perception of turning left
+        yield p0, 1, np.append(np.roll(adj, 2), point)
+        # perception of turning right
+        yield p0, 2, np.append(np.roll(adj, -2), point)
