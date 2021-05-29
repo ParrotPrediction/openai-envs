@@ -1,6 +1,7 @@
 import logging
 import random
 import sys
+import pytest
 
 import gym
 
@@ -12,14 +13,20 @@ logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
 class TestRealMultiplexer:
 
-    def test_should_initialize_real_mpx(self):
+    @pytest.mark.parametrize("_env_name, _obs_space", [
+        ('real-multiplexer-3bit-v0', 4),
+        ('real-multiplexer-6bit-v0', 7),
+        ('real-multiplexer-11bit-v0', 12),
+        ('real-multiplexer-20bit-v0', 21),
+    ])
+    def test_should_initialize_real_mpx(self, _env_name, _obs_space):
         # when
-        mp = gym.make("real-multiplexer-6bit-v0")
+        mp = gym.make(_env_name)
 
         # then
         assert mp is not None
-        assert (7,) == mp.observation_space.shape
-        assert 2 == mp.action_space.n
+        assert (_obs_space,) == mp.observation_space.shape
+        assert mp.action_space.n == 2
 
     def test_should_return_observation_when_reset(self):
         # given
