@@ -38,7 +38,7 @@ class Corridor(gym.Env):
         if self._position == -1:
             self._position = 0
 
-        return str(self._position), 0, False, None
+        return str(self._position), 0, False, {}
 
     def render(self, mode='human'):
         if mode == 'human':

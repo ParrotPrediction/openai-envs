@@ -7,18 +7,22 @@ from gym_maze.common import MAZE_ANIMAT, MAZE_WALL, MAZE_PATH, MAZE_REWARD
 
 
 class MazeObservationSpace(gym.Space):
+
     def __init__(self, n):
         # n is the number of visible neighbour fields, typically 8
-        self.np_random = np.random.RandomState()
         self.n = n
         gym.Space.__init__(self, (self.n,), str)
 
-    def seed(self, seed):
+    def seed(self, seed=None):
         self.np_random.seed(seed)
 
     def sample(self):
         states = map(str, [MAZE_PATH, MAZE_WALL, MAZE_REWARD])
         return tuple(random.choice(list(states)) for _ in range(self.n))
+
+    @property
+    def np_random(self):
+        return np.random.RandomState()
 
     def contains(self, x):
         states = map(str, [MAZE_PATH, MAZE_WALL, MAZE_ANIMAT, MAZE_REWARD])

@@ -12,7 +12,7 @@ class TestEnergyMountainCar:
 
     def test_should_make_move(self):
         env = gym.make('EnergyMountainCar-v0')
-        env.seed(1)
+        env.seed(1, )
 
         # initial conditions
         (position, velocity) = env.reset()

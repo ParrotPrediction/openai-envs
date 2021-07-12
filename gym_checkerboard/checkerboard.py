@@ -41,7 +41,7 @@ class Checkerboard(gym.Env):
             self._validation_bit = 1
             reward = self.REWARD
 
-        return self._observation, reward, True, None
+        return self._observation, reward, True, {}
 
     def render(self, mode='human'):
         if mode == 'human':

@@ -31,7 +31,7 @@ class TestCheckerboard:
 
         # when
         env.reset()
-        state, reward, done, _ = env.step(action)
+        state, reward, done, _, = env.step(action)
 
         # then
         assert len(state) == 3
