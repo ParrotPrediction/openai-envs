@@ -33,7 +33,7 @@ class Corridor(gym.Env):
             raise ValueError("Illegal action passed")
 
         if self._position == self._size - 1:
-            return str(self._position), self.REWARD, True, None
+            return str(self._position), self.REWARD, True, {}
 
         if self._position == -1:
             self._position = 0

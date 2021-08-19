@@ -61,10 +61,10 @@ class Grid(gym.Env):
 
         # Handle reaching final state
         if self._in_reward:
-            return self._state, self.REWARD, True, None
+            return self._state, self.REWARD, True, {}
 
         # Return default observation
-        return self._state, 0, False, None
+        return self._state, 0, False, {}
 
     def render(self, mode='human'):
         if mode == 'human':

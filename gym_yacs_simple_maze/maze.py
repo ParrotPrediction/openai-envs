@@ -63,9 +63,9 @@ class SimpleMaze(gym.Env):
                 self._position = transition.state
 
         if self._position == 6:
-            return self._current_perception(), self.REWARD, True, None
+            return self._current_perception(), self.REWARD, True, {}
 
-        return self._current_perception(), 0, False, None
+        return self._current_perception(), 0, False, {}
 
     def _current_perception(self):
         return self._perception(self._position)
