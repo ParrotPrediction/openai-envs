@@ -64,16 +64,19 @@ def _create_graph(env):
 def distinguish_direction(start: Tuple[int, int], end: Tuple[int, int]):
     direction = ''
 
-    if end[1] + 1 == start[1]:
-        direction += 'N'
+    vertical_diff = end[0] - start[0]
+    horizontal_diff = end[1] - start[1]
 
-    if end[0] - 1 == start[0]:
-        direction += 'S'
+    if vertical_diff != 0:
+        if vertical_diff > 0:
+            direction += 'S'
+        else:
+            direction += 'N'
 
-    if end[1] - 1 == start[1]:
-        direction += 'W'
-
-    if end[0] + 1 == start[0]:
-        direction += 'E'
+    if horizontal_diff != 0:
+        if horizontal_diff > 0:
+            direction += 'E'
+        else:
+            direction += 'W'
 
     return direction

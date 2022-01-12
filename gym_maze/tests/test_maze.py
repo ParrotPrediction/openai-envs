@@ -1,8 +1,7 @@
 import gym
+import gym_maze  # noqa: F401
 import numpy as np
 import pytest
-
-import gym_maze  # noqa: F401
 from gym_maze.common import MAZE_ANIMAT
 
 
@@ -44,6 +43,24 @@ class TestMaze:
 
         env.reset()
         assert np.sum(np.where(env.env.maze.matrix == MAZE_ANIMAT, 1, 0)) == 1
+
+    def test_should_get_correct_transitions(self):
+        env = gym.make('MazeF1-v0')
+
+        transitions = {}
+        for start, direction, end in env.env.get_transitions():
+            if start not in transitions:
+                transitions[start] = {}
+
+            transitions[start][direction] = end
+
+        assert len(transitions) == 5
+        assert transitions[(1, 1)] == {2: (1, 2), 4: (2, 1)}
+        assert transitions[(2, 1)] == {0: (1, 1), 4: (3, 1), 3: (3, 2),
+                                       1: (1, 2)}
+        assert transitions[(3, 1)] == {0: (2, 1), 4: (4, 1), 2: (3, 2)}
+        assert transitions[(3, 2)] == {7: (2, 1), 6: (3, 1), 5: (4, 1)}
+        assert transitions[(4, 1)] == {0: (3, 1), 1: (3, 2)}
 
     @pytest.mark.skip(reason="include wall movements in transitions")
     @pytest.mark.parametrize("_env_name, _c", [
