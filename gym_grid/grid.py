@@ -45,7 +45,7 @@ class Grid(gym.Env):
 
     def step(self, action):
         if action == MOVE_LEFT:
-            if self._pos_x - 1 >= 1:
+            if self._pos_x - 1 >= 0:
                 self._pos_x -= 1
         elif action == MOVE_RIGHT:
             if self._pos_x + 1 < self._size:
@@ -54,7 +54,7 @@ class Grid(gym.Env):
             if self._pos_y + 1 < self._size:
                 self._pos_y += 1
         elif action == MOVE_DOWN:
-            if self._pos_y - 1 >= 1:
+            if self._pos_y - 1 >= 0:
                 self._pos_y -= 1
         else:
             raise ValueError("Illegal action passed")
