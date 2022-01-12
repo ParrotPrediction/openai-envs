@@ -105,7 +105,7 @@ class TestFiniteStateWorld:
         fsw.reset()
 
         # when
-        mapping = fsw._state_action()
+        mapping = fsw.state_action()
 
         # then
         assert len(mapping) == 11

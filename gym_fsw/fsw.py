@@ -42,7 +42,7 @@ class FiniteStateWorld(gym.Env):
     def _observation(self):
         return str(self.pos)
 
-    def _state_action(self):
+    def state_action(self):
         """
         Return states and possible actions in each of them
         """
