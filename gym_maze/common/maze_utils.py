@@ -18,8 +18,11 @@ def get_possible_insertion_coordinates(matrix: np.ndarray) \
 
 def get_animat_xy(matrix: np.ndarray) -> Tuple[int, int]:
     animats = np.argwhere(matrix == MAZE_ANIMAT)
-    assert len(animats) == 1
-    return tuple(animats[0])
+    if len(animats) == 1:
+        return tuple(animats[0])
+    else:
+        # reward was found
+        return tuple(get_reward_xy(matrix))
 
 
 def get_reward_xy(matrix: np.ndarray) -> Tuple[int, int]:

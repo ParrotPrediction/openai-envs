@@ -70,10 +70,11 @@ class MazeImpl(AbstractMaze):
             next_state = (x-1, y-1)
 
         if next_state:
+            self.matrix[x, y] = MAZE_PATH
+
             if self.matrix[next_state] == MAZE_REWARD:
                 self.found_reward = True
             else:
-                self.matrix[x, y] = MAZE_PATH
                 self.matrix[next_state] = MAZE_ANIMAT
 
     def get_goal_state(self):
