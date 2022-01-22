@@ -27,6 +27,11 @@ class Woods:
         y_idx, x_idx = np.where(self.matrix == '.')
         return tuple(zip(x_idx, y_idx))
 
+    @property
+    def reward_cords(self):
+        y_idx, x_idx = np.where(self.matrix == 'F')
+        return tuple(zip(x_idx, y_idx))
+
     def perception(self, x, y):
         if not 0 <= x < self.max_x:
             raise ValueError('X position not within allowed range')

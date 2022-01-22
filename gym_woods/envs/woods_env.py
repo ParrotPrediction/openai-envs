@@ -220,6 +220,10 @@ class AbstractWoods(gym.Env):
                 if not self.is_wall(perception):
                     mapping[key].append(find_action_by_direction(action))
 
+        # Goal state
+        for key in self.maze.reward_cords:
+            mapping[key] = []
+
         # Cast (int, int) key to (str, str)
         mapping = {(str(k[0]), str(k[1])): v for k, v in mapping.items()}
 
