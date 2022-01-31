@@ -13,3 +13,15 @@ register(
     entry_point='gym_fsw:FiniteStateWorld',
     kwargs={'size': 10}
 )
+
+register(
+    id='fsw-20-v0',
+    entry_point='gym_fsw:FiniteStateWorld',
+    kwargs={'size': 20}
+)
+
+register(
+    id='fsw-40-v0',
+    entry_point='gym_fsw:FiniteStateWorld',
+    kwargs={'size': 40}
+)
