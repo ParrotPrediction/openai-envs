@@ -7,7 +7,7 @@ For usage examples look at [examples/](examples) directory.
 
 ## Development
 
-    conda create --name openai-envs python=3.7
+    conda create --name openai-envs python>=3.7
     conda activate openai-envs
 
     pip install -e ".[testing]"

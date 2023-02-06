@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 install_requires = [
     'numpy',
-    'gym==0.21.0',
+    'gym==0.22.0',
     'networkx==2.5',
     'bitstring==3.1.7',
     'flake8==3.8.4'
